@@ -176,7 +176,7 @@ const AddRecordButton = () => {
         open={isModalOpen}
         onOk={handleModalOk}
         centered
-        width={600}
+        width={648}
         className="cc-modal"
         onCancel={handleCancel}
         okText="新增設備"

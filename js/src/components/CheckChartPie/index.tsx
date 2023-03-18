@@ -13,7 +13,7 @@ const CheckChartPie: React.FC<{
         const carbonTonsPerYear = record?.carbonTonsPerYear || 0
 
         return {
-          value: round(carbonTonsPerYear),
+          value: round(carbonTonsPerYear, 1),
           type: record?.sourceName,
         }
       })

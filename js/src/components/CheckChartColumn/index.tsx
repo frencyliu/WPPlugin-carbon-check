@@ -19,7 +19,7 @@ const CheckChartColumn: React.FC<{
             })
             return {
               month: `${index + 1}月`,
-              value: round(amountTon),
+              value: round(amountTon, 1),
               type: record?.sourceName,
             }
           })
@@ -30,7 +30,7 @@ const CheckChartColumn: React.FC<{
           .fill(carbonTonsPerYear / 12)
           .map((amount, index) => ({
             month: `${index + 1}月`,
-            value: round(amount),
+            value: round(amount, 1),
             type: record?.sourceName,
           }))
         return dataArr

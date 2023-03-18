@@ -108,6 +108,7 @@ const ImageUpload = () => {
       {!!imgData.attachmentId && (
         <div className="relative w-full aspect-video rounded-xl border-solid border-gray-200">
           <img
+            alt="upload"
             className="w-full aspect-video object-cover"
             id={imgData.attachmentId.toString()}
             src={imgData.url}
