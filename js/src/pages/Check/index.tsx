@@ -14,6 +14,7 @@ import { isEqual } from 'lodash-es'
 import { defaultScopes } from '@/utils'
 import EditProjectModal from './components/EditProjectModal'
 import EditProjectButtons from './components/EditProjectButtons'
+import { Scrollbars } from 'react-custom-scrollbars-2'
 
 export const ProjectContext = createContext<{
   projectData: any
@@ -178,7 +179,9 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <div className="w-full overflow-x-auto pb-8">
+    <Scrollbars
+      style={{ width: '100%', height: '36rem', paddingBottom: '2rem' }}
+    >
       <div className="min-w-[990px]">
         <ProjectContext.Provider
           value={{ projectData, scopes, setScopes, printMode, setIsDiff }}
@@ -204,7 +207,7 @@ const App: React.FC = () => {
           </Form>
         </ProjectContext.Provider>
       </div>
-    </div>
+    </Scrollbars>
   )
 }
 
