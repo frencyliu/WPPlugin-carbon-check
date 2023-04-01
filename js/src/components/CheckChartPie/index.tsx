@@ -19,7 +19,7 @@ const CheckChartPie: React.FC<{
       })
     : []
 
-  // sum the value if the type is 工廠1
+  // sum the value if the type is 辦公室1
   const data = formatData
 
   function renderStatistic(

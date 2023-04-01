@@ -179,35 +179,37 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <Scrollbars
-      style={{ width: '100%', height: '36rem', paddingBottom: '2rem' }}
-    >
-      <div className="min-w-[990px]">
-        <ProjectContext.Provider
-          value={{ projectData, scopes, setScopes, printMode, setIsDiff }}
-        >
-          <Form form={form}>
-            <hr style={{ borderColor: colorPrimary }} />
+    <>
+      <Scrollbars
+        style={{ width: '100%', height: '36rem', paddingBottom: '2rem' }}
+      >
+        <div className="min-w-[990px]">
+          <ProjectContext.Provider
+            value={{ projectData, scopes, setScopes, printMode, setIsDiff }}
+          >
+            <Form form={form}>
+              <hr style={{ borderColor: colorPrimary }} />
 
-            <Row align="middle" className="my-8">
-              <Col flex="auto">
-                <EditProjectModal />
-              </Col>
-              <Col flex="none">
-                <EditProjectButtons
-                  isDiff={isDiff}
-                  handleUpdate={handleUpdate}
-                />
-              </Col>
-            </Row>
+              <Row align="middle" className="my-8">
+                <Col flex="auto">
+                  <EditProjectModal />
+                </Col>
+                <Col flex="none">
+                  <EditProjectButtons
+                    isDiff={isDiff}
+                    handleUpdate={handleUpdate}
+                  />
+                </Col>
+              </Row>
 
-            <div className="w-full border-2 border-gray-500">
-              <Tabs tabPosition="left" items={items} />
-            </div>
-          </Form>
-        </ProjectContext.Provider>
-      </div>
-    </Scrollbars>
+              <div className="w-full border-2 border-gray-500">
+                <Tabs tabPosition="left" items={items} />
+              </div>
+            </Form>
+          </ProjectContext.Provider>
+        </div>
+      </Scrollbars>
+    </>
   )
 }
 

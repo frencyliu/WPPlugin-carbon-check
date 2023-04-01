@@ -10,7 +10,7 @@ import useMonthlyTable from './hooks/useMonthlyTable'
 import type { ColumnType } from 'antd/lib/table'
 import { useColor, useEditableTitle } from '@/hooks'
 import { ProjectContext } from '@/pages/Check'
-import { windowOuterWidth } from '@/utils'
+import { windowOuterWidth, companyCategories } from '@/utils'
 
 const App: React.FC = () => {
   const size = windowOuterWidth < 768 ? 'small' : 'middle'
@@ -23,6 +23,12 @@ const App: React.FC = () => {
     printMode = false,
   } = useContext(ProjectContext)
   const scopeIGroups = scopes?.scopeI || []
+
+  const initialValue =
+    companyCategories.find(
+      (companyCategory) =>
+        companyCategory.name === scopes?.info?.companyCategory,
+    )?.scopeIDefaultValue || '辦公室'
 
   const {
     groupKey,
@@ -46,9 +52,9 @@ const App: React.FC = () => {
       'groupName',
     ],
     required: true,
-    initialValue: '工廠',
+    initialValue,
     title: {
-      theTitle: groupData?.groupName || '工廠',
+      theTitle: groupData?.groupName || initialValue,
       level: 4,
     },
     printMode,

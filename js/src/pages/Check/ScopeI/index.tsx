@@ -1,15 +1,23 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import CheckScopeITable from '@/pages/Check/ScopeI/CheckScopeITable'
 import { Button } from 'antd'
 import { AppstoreAddOutlined } from '@ant-design/icons'
 import { ProjectContext } from '@/pages/Check'
 import { TGroupData } from '@/types'
 import { nanoid } from 'nanoid'
+import { companyCategories } from '@/utils'
 
 const ScopeIPage = () => {
   const { projectData, scopes, setScopes } = useContext(ProjectContext)
   const postId = projectData?.id
+
   const scopeIGroups: TGroupData[] = scopes?.scopeI || []
+
+  const groupName =
+    companyCategories.find(
+      (companyCategory) =>
+        companyCategory.name === scopes?.info?.companyCategory,
+    )?.scopeIDefaultValue || '辦公室'
 
   const handleAddGroup = () => {
     setScopes({
@@ -18,7 +26,7 @@ const ScopeIPage = () => {
         ...scopeIGroups,
         {
           groupKey: nanoid(),
-          groupName: '工廠',
+          groupName,
           dataSource: [],
         },
       ],

@@ -5,14 +5,14 @@ export const defaultScopes: TScopes = {
   scopeI: [
     {
       groupKey: '0',
-      groupName: '工廠 #1',
+      groupName: '辦公室 #1',
       dataSource: [],
     },
   ],
   scopeII: [
     {
       groupKey: '0',
-      groupName: '工廠 #1',
+      groupName: '辦公室 #1',
       dataSource: [],
     },
   ],

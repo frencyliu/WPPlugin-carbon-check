@@ -31,6 +31,14 @@ const Create = () => {
 
   const handleOk = async () => {
     setConfirmLoading(true)
+    const groupName =
+      companyCategories.find(
+        (companyCategory) => companyCategory.name === companyCategoryName,
+      )?.scopeIDefaultValue || '辦公室'
+
+    defaultScopes.scopeI[0].groupName = `${groupName} #1`
+    defaultScopes.scopeII[0].groupName = `${groupName} #1`
+
     const theScopes = {
       ...defaultScopes,
       info: {
@@ -51,10 +59,16 @@ const Create = () => {
         },
       })
 
+      defaultScopes.scopeI[0].groupName = groupName
+      defaultScopes.scopeII[0].groupName = groupName
+
       setIsModalOpen(false)
       setConfirmLoading(false)
       navigate(`${baseUrl}check`, {
-        state: { id: createResult.data?.id || 0 },
+        state: {
+          id: createResult.data?.id || 0,
+          defaultScopes,
+        },
       })
     } catch (error) {
       setIsModalOpen(false)
