@@ -31,13 +31,26 @@ const Create = () => {
 
   const handleOk = async () => {
     setConfirmLoading(true)
-    const groupName =
+    const scopeIGroupNames =
       companyCategories.find(
         (companyCategory) => companyCategory.name === companyCategoryName,
-      )?.scopeIDefaultValue || '辦公室'
+      )?.scopeIDefaultValue || []
 
-    defaultScopes.scopeI[0].groupName = `${groupName} #1`
-    defaultScopes.scopeII[0].groupName = `${groupName} #1`
+    const scopeIIGroupNames =
+      companyCategories.find(
+        (companyCategory) => companyCategory.name === companyCategoryName,
+      )?.scopeIIDefaultValue || []
+
+    defaultScopes.scopeI = scopeIGroupNames.map((group) => ({
+      groupKey: `${group}#1`,
+      groupName: group,
+      dataSource: [],
+    }))
+    defaultScopes.scopeII = scopeIIGroupNames.map((group) => ({
+      groupKey: `${group}#1`,
+      groupName: group,
+      dataSource: [],
+    }))
 
     const theScopes = {
       ...defaultScopes,
@@ -58,9 +71,6 @@ const Create = () => {
           },
         },
       })
-
-      defaultScopes.scopeI[0].groupName = groupName
-      defaultScopes.scopeII[0].groupName = groupName
 
       setIsModalOpen(false)
       setConfirmLoading(false)

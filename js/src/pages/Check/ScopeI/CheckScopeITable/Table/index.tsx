@@ -24,11 +24,9 @@ const App: React.FC = () => {
   } = useContext(ProjectContext)
   const scopeIGroups = scopes?.scopeI || []
 
-  const initialValue =
-    companyCategories.find(
-      (companyCategory) =>
-        companyCategory.name === scopes?.info?.companyCategory,
-    )?.scopeIDefaultValue || '辦公室'
+  const initialValues = companyCategories.find(
+    (companyCategory) => companyCategory.name === scopes?.info?.companyCategory,
+  )?.scopeIDefaultValue || ['辦公室']
 
   const {
     groupKey,
@@ -52,9 +50,9 @@ const App: React.FC = () => {
       'groupName',
     ],
     required: true,
-    initialValue,
+    initialValue: initialValues[0] || '辦公室',
     title: {
-      theTitle: groupData?.groupName || initialValue,
+      theTitle: groupData?.groupName || initialValues[0],
       level: 4,
     },
     printMode,

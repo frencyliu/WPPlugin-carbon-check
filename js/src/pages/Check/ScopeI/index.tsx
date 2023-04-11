@@ -13,11 +13,11 @@ const ScopeIPage = () => {
 
   const scopeIGroups: TGroupData[] = scopes?.scopeI || []
 
-  const groupName =
+  const groupNames =
     companyCategories.find(
       (companyCategory) =>
         companyCategory.name === scopes?.info?.companyCategory,
-    )?.scopeIDefaultValue || '辦公室'
+    )?.scopeIDefaultValue || []
 
   const handleAddGroup = () => {
     setScopes({
@@ -26,7 +26,7 @@ const ScopeIPage = () => {
         ...scopeIGroups,
         {
           groupKey: nanoid(),
-          groupName,
+          groupName: groupNames[0] || '辦公室',
           dataSource: [],
         },
       ],

@@ -12,11 +12,11 @@ const ScopeIIPage = () => {
   const postId = projectData?.id
   const scopeIIGroups: TGroupData[] = scopes?.scopeII || []
 
-  const groupName =
+  const groupNames =
     companyCategories.find(
       (companyCategory) =>
         companyCategory.name === scopes?.info?.companyCategory,
-    )?.scopeIDefaultValue || '辦公室'
+    )?.scopeIDefaultValue || []
 
   const handleAddGroup = () => {
     setScopes({
@@ -25,7 +25,7 @@ const ScopeIIPage = () => {
         ...scopeIIGroups,
         {
           groupKey: nanoid(),
-          groupName,
+          groupName: groupNames[0] || '辦公室',
           dataSource: [],
         },
       ],
