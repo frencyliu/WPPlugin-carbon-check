@@ -19,8 +19,10 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
   const form = Form.useFormInstance()
   const { scopes, setScopes, scopesNumber } = useContext(ProjectContext)
   const { groupIndex, groupKey } = useContext(TableDataContext)
-  const scopeIGroups = scopes?.scopeI || []
-  const group = scopeIGroups.find((theGroup) => theGroup.groupKey === groupKey)
+  const scopeIGroups = scopes[scopesNumber] || []
+  const group = scopeIGroups.find(
+    (theGroup: { groupKey: any }) => theGroup.groupKey === groupKey,
+  )
   const dataSource = group?.dataSource || []
   const { colorPrimary } = useColor()
 
@@ -48,8 +50,8 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
     const theHours = !!theHourlyAmount ? theYearlyAmount / theHourlyAmount : 0
 
     form.setFieldsValue({
-      scopeI: {
-        ...values?.scopeI,
+      [scopesNumber]: {
+        ...values[scopesNumber],
         [groupIndex]: {
           groupName: group?.groupName || '',
           sourceName: theRecord.sourceName,
@@ -69,7 +71,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
   }
 
   const handleData = () => {
-    const formData = form.getFieldsValue().scopeI[groupIndex]
+    const formData = form.getFieldsValue()[scopesNumber][groupIndex]
 
     const getYearlyAmount = (theFormData: any) => {
       switch (theFormData?.period) {
@@ -117,7 +119,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
     }
 
     const theRecordIndex = dataSource.findIndex(
-      (theRecord) => theRecord.key === record?.key,
+      (theRecord: { key: string }) => theRecord.key === record?.key,
     )
 
     return [
@@ -137,7 +139,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
         const newDataSource = handleData()
         const newScopes = JSON.parse(JSON.stringify(scopes))
 
-        newScopes.scopeI[groupIndex].dataSource = newDataSource
+        newScopes[scopesNumber][groupIndex].dataSource = newDataSource
 
         setScopes(newScopes)
       })

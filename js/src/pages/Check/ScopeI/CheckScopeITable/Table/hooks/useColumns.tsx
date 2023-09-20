@@ -12,19 +12,24 @@ import { round } from 'lodash-es'
 
 const useColumns = () => {
   const { colorPrimary } = useColor()
-  const { scopes, setScopes, printMode = false } = useContext(ProjectContext)
-  const scopeIGroups = scopes?.scopeI || []
+  const {
+    scopes,
+    setScopes,
+    printMode = false,
+    scopesNumber,
+  } = useContext(ProjectContext)
+  const scopeIGroups = scopes[scopesNumber] || []
   const { groupIndex } = useContext(TableDataContext)
   const group = scopeIGroups[groupIndex]
   const dataSource = group?.dataSource || []
 
   const handleDelete = (key: string) => {
     const newDataSource = dataSource.filter(
-      (theRecord) => theRecord.key !== key,
+      (theRecord: { key: string }) => theRecord.key !== key,
     )
     setScopes({
       ...scopes,
-      scopeI: [
+      [scopesNumber]: [
         ...scopeIGroups.slice(0, groupIndex),
         {
           ...group,
