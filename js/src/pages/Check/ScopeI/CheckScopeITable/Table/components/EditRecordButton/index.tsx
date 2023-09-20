@@ -17,7 +17,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
   record,
 }) => {
   const form = Form.useFormInstance()
-  const { scopes, setScopes } = useContext(ProjectContext)
+  const { scopes, setScopes, scopesNumber } = useContext(ProjectContext)
   const { groupIndex, groupKey } = useContext(TableDataContext)
   const scopeIGroups = scopes?.scopeI || []
   const group = scopeIGroups.find((theGroup) => theGroup.groupKey === groupKey)
@@ -152,7 +152,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
 
   const period = Form.useWatch(
     [
-      'scopeI',
+      scopesNumber,
       groupIndex,
       'period',
     ],
@@ -188,7 +188,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
               <Form.Item
                 // hasFeedback={true}
                 name={[
-                  'scopeI',
+                  scopesNumber,
                   groupIndex,
                   'sourceName',
                 ]}
@@ -199,7 +199,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
 
               <Form.Item
                 name={[
-                  'scopeI',
+                  scopesNumber,
                   groupIndex,
                   'period',
                 ]}
@@ -221,18 +221,21 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
                 <GWPYearlyFormItem
                   groupIndex={groupIndex}
                   validating={validating}
+                  scopesNumber={scopesNumber}
                 />
               )}
               {period === 'monthly' && (
                 <GWPMonthlyFormItem
                   groupIndex={groupIndex}
                   validating={validating}
+                  scopesNumber={scopesNumber}
                 />
               )}
               {period === 'hourly' && (
                 <GWPHourlyFormItem
                   groupIndex={groupIndex}
                   validating={validating}
+                  scopesNumber={scopesNumber}
                 />
               )}
             </Form>

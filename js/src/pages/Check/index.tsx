@@ -15,6 +15,9 @@ import { defaultScopes } from '@/utils'
 import EditProjectModal from './components/EditProjectModal'
 import EditProjectButtons from './components/EditProjectButtons'
 import { Scrollbars } from 'react-custom-scrollbars-2'
+import ScopeV from './ScopeV'
+import { set } from 'zod'
+import ScopeVI from './ScopeVI'
 
 export const ProjectContext = createContext<{
   projectData: any
@@ -22,12 +25,14 @@ export const ProjectContext = createContext<{
   setScopes: React.Dispatch<TScopes>
   printMode: boolean
   setIsDiff: React.Dispatch<boolean>
+  scopesNumber: string
 }>({
   projectData: null,
   scopes: defaultScopes,
   setScopes: () => {},
   printMode: false,
   setIsDiff: () => {},
+  scopesNumber: 'scopeI',
 })
 
 const App: React.FC = () => {
@@ -39,35 +44,65 @@ const App: React.FC = () => {
     isDiff,
     setIsDiff,
   ] = useState(false)
-
+  console.log('scopes', scopes)
   const [
     printMode,
     setPrintMode,
   ] = useState(false)
 
-  const handlePrintMode = (enablePrintMode: boolean) => () => {
+  const [
+    scopesNumber,
+    setScopesNumber,
+  ] = useState('scopeI')
+
+  const handlePrintMode = (enablePrintMode: boolean, number: string) => () => {
     setPrintMode(enablePrintMode)
+    if (number) {
+      setScopesNumber(number)
+    }
   }
 
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: <span onClick={handlePrintMode(false)}>SCOPE I</span>,
+      label: <span onClick={handlePrintMode(false, 'scopeI')}>SCOPE I</span>,
       children: <ScopeI />,
     },
     {
       key: '2',
-      label: <span onClick={handlePrintMode(false)}>SCOPE II</span>,
+      label: <span onClick={handlePrintMode(false, 'scopeII')}>SCOPE II</span>,
       children: <ScopeII />,
     },
     {
       key: '3',
-      label: <span onClick={handlePrintMode(true)}>報表</span>,
-      children: <Chart />,
+      label: (
+        <span onClick={handlePrintMode(false, 'scopeIII')}>SCOPE III</span>
+      ),
+      children: <ScopeI />,
     },
     {
       key: '4',
-      label: <span onClick={handlePrintMode(true)}>匯出</span>,
+      label: <span onClick={handlePrintMode(false, 'scopeIV')}>SCOPE IV</span>,
+      children: <ScopeI />,
+    },
+    {
+      key: '5',
+      label: <span onClick={handlePrintMode(false, 'scopeV')}>SCOPE V</span>,
+      children: <ScopeV />,
+    },
+    {
+      key: '6',
+      label: <span onClick={handlePrintMode(false, 'scopeVI')}>SCOPE VI</span>,
+      children: <ScopeVI />,
+    },
+    {
+      key: '7',
+      label: <span onClick={handlePrintMode(true, '')}>報表</span>,
+      children: <Chart />,
+    },
+    {
+      key: '8',
+      label: <span onClick={handlePrintMode(true, '')}>匯出</span>,
       children: <Export />,
     },
   ]
@@ -88,33 +123,29 @@ const App: React.FC = () => {
     const content = form.getFieldValue(['content'])
     const companyCategory = form.getFieldValue(['companyCategory'])
     const copyScopes = JSON.parse(JSON.stringify(scopes || defaultScopes))
+    console.log('copyScopes', form.getFieldsValue() || {})
+    const updateScope = (scopeString: string) => {
+      return copyScopes[scopeString]?.map(
+        (theGroup: TGroupData, groupIndex: number) => ({
+          ...theGroup,
+          groupName:
+            form.getFieldValue([
+              scopeString,
+              groupIndex,
+              'groupName',
+            ]) || scopes[scopeString][0].groupName,
+        }),
+      )
+    }
 
-    const updateScopeI = copyScopes.scopeI.map(
-      (theGroup: TGroupData, groupIndex: number) => ({
-        ...theGroup,
-        groupName:
-          form.getFieldValue([
-            'scopeI',
-            groupIndex,
-            'groupName',
-          ]) || '',
-      }),
-    )
-    const updateScopeII = copyScopes.scopeII.map(
-      (theGroup: TGroupData, groupIndex: number) => ({
-        ...theGroup,
-        groupName:
-          form.getFieldValue([
-            'scopeII',
-            groupIndex,
-            'groupName',
-          ]) || '',
-      }),
-    )
     const updateScopes = {
       ...copyScopes,
-      scopeI: updateScopeI,
-      scopeII: updateScopeII,
+      scopeI: updateScope('scopeI'),
+      scopeII: updateScope('scopeII'),
+      scopeIII: updateScope('scopeIII'),
+      scopeIV: updateScope('scopeIV'),
+      scopeV: updateScope('scopeV'),
+      scopeVI: updateScope('scopeVI'),
       info: {
         ...copyScopes.info,
         title,
@@ -147,6 +178,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (!!projectData) {
       const fectchScopes = JSON.parse(projectData.meta.project_data)
+      console.log('fectchScopes', fectchScopes)
       setScopes(fectchScopes)
       form.setFieldValue(['title'], fectchScopes?.info?.title)
       form.setFieldValue(
@@ -185,7 +217,14 @@ const App: React.FC = () => {
       >
         <div className="min-w-[990px]">
           <ProjectContext.Provider
-            value={{ projectData, scopes, setScopes, printMode, setIsDiff }}
+            value={{
+              projectData,
+              scopes,
+              setScopes,
+              printMode,
+              setIsDiff,
+              scopesNumber,
+            }}
           >
             <Form form={form}>
               <hr style={{ borderColor: colorPrimary }} />

@@ -21,8 +21,9 @@ const App: React.FC = () => {
     projectData: projectContextData,
     scopes,
     printMode = false,
+    scopesNumber,
   } = useContext(ProjectContext)
-  const scopeIGroups = scopes?.scopeI || []
+  const scopeNumberGroups = scopes[scopesNumber] || []
 
   const initialValues = companyCategories.find(
     (companyCategory) => companyCategory.name === scopes?.info?.companyCategory,
@@ -36,8 +37,9 @@ const App: React.FC = () => {
   } = useContext(TableDataContext)
 
   const dataSource =
-    scopeIGroups.find((group) => group.groupKey === groupKey)?.dataSource || []
-
+    scopeNumberGroups.find(
+      (group: { groupKey: any }) => group.groupKey === groupKey,
+    )?.dataSource || []
   const id = projectContextData?.id || 0
   const form = Form.useFormInstance()
   // const data = JSON.parse(projectContextData?.meta?.project_data || '{}')
@@ -45,7 +47,7 @@ const App: React.FC = () => {
   const { element } = useEditableTitle({
     form,
     name: [
-      'scopeI',
+      scopesNumber,
       groupIndex,
       'groupName',
     ],

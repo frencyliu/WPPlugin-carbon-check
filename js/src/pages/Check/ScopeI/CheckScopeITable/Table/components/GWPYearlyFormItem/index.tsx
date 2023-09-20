@@ -6,13 +6,14 @@ import FormUnitSelect from '@/components/FormUnitSelect'
 const GWPYearlyFormItem: React.FC<{
   groupIndex: number
   validating: boolean
-}> = ({ groupIndex, validating }) => {
+  scopesNumber: string
+}> = ({ groupIndex, validating, scopesNumber }) => {
   return (
     <>
       <Input.Group compact className="mb-4">
         <Form.Item
           name={[
-            'scopeI',
+            scopesNumber,
             groupIndex,
             'yearlyAmount',
           ]}
@@ -34,7 +35,7 @@ const GWPYearlyFormItem: React.FC<{
         </Form.Item>
         <Form.Item
           name={[
-            'scopeI',
+            scopesNumber,
             groupIndex,
             'gwp',
           ]}
@@ -48,7 +49,7 @@ const GWPYearlyFormItem: React.FC<{
         >
           <FormGWPSelect
             name={[
-              'scopeI',
+              scopesNumber,
               groupIndex,
               'gwp',
             ]}
@@ -56,7 +57,7 @@ const GWPYearlyFormItem: React.FC<{
         </Form.Item>
         <Form.Item
           name={[
-            'scopeI',
+            scopesNumber,
             groupIndex,
             'unit',
           ]}
@@ -71,7 +72,7 @@ const GWPYearlyFormItem: React.FC<{
         >
           <FormUnitSelect
             name={[
-              'scopeI',
+              scopesNumber,
               groupIndex,
               'unit',
             ]}

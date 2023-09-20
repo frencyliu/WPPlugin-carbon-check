@@ -17,7 +17,12 @@ export type TInfo = {
 }
 
 export type TScopes = {
+  [key: string]: any
   scopeI: TGroupData[]
   scopeII: TGroupData[]
+  scopeIII: TGroupData[]
+  scopeIV: TGroupData[]
+  scopeV: TGroupData[]
+  scopeVI: TGroupData[]
   info: TInfo
 }

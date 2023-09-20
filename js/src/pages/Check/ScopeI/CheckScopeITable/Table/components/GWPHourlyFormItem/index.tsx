@@ -6,13 +6,14 @@ import { handleClearZero } from '@/utils'
 const GWPHourlyFormItem: React.FC<{
   groupIndex: number
   validating: boolean
-}> = ({ groupIndex, validating }) => {
+  scopesNumber: string
+}> = ({ groupIndex, validating, scopesNumber }) => {
   return (
     <>
       <Input.Group compact className="mb-4">
         <Form.Item
           name={[
-            'scopeI',
+            scopesNumber,
             groupIndex,
             'hourlyAmount',
           ]}
@@ -34,7 +35,7 @@ const GWPHourlyFormItem: React.FC<{
         </Form.Item>
         <Form.Item
           name={[
-            'scopeI',
+            scopesNumber,
             groupIndex,
             'gwp',
           ]}
@@ -48,7 +49,7 @@ const GWPHourlyFormItem: React.FC<{
         >
           <FormGWPSelect
             name={[
-              'scopeI',
+              scopesNumber,
               groupIndex,
               'gwp',
             ]}
@@ -56,7 +57,7 @@ const GWPHourlyFormItem: React.FC<{
         </Form.Item>
         <Form.Item
           name={[
-            'scopeI',
+            scopesNumber,
             groupIndex,
             'unit',
           ]}
@@ -71,7 +72,7 @@ const GWPHourlyFormItem: React.FC<{
         >
           <FormUnitSelect
             name={[
-              'scopeI',
+              scopesNumber,
               groupIndex,
               'unit',
             ]}
@@ -81,7 +82,7 @@ const GWPHourlyFormItem: React.FC<{
       <Input.Group compact className="mb-4">
         <Form.Item
           name={[
-            'scopeI',
+            scopesNumber,
             groupIndex,
             'hours',
           ]}

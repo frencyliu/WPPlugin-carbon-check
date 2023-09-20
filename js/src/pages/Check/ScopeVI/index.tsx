@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import CheckScopeITable from '@/pages/Check/ScopeI/CheckScopeITable'
+import CheckScopeVITable from '@/pages/Check/ScopeI/CheckScopeITable'
 import { Button } from 'antd'
 import { AppstoreAddOutlined } from '@ant-design/icons'
 import { ProjectContext } from '@/pages/Check'
@@ -7,11 +7,11 @@ import { TGroupData } from '@/types'
 import { nanoid } from 'nanoid'
 import { companyCategories } from '@/utils'
 
-const ScopeIPage = () => {
+const ScopeVIPage = () => {
   const { projectData, scopes, setScopes } = useContext(ProjectContext)
   const postId = projectData?.id
 
-  const scopeIGroups: TGroupData[] = scopes?.scopeI || []
+  const scopeVIGroups: TGroupData[] = scopes?.scopeVI || []
 
   const groupNames =
     companyCategories.find(
@@ -20,12 +20,10 @@ const ScopeIPage = () => {
     )?.scopeIDefaultValue || []
 
   const handleAddGroup = () => {
-    console.log('groupNames', groupNames)
-    console.log('scopeIIGroups', scopeIGroups)
     setScopes({
       ...scopes,
-      scopeI: [
-        ...scopeIGroups,
+      scopeVI: [
+        ...scopeVIGroups,
         {
           groupKey: nanoid(),
           groupName: groupNames[0] || '辦公室',
@@ -36,23 +34,23 @@ const ScopeIPage = () => {
   }
 
   const handleDeleteGroup = (theGroupKey: string) => {
-    const newScopeIGroups = scopeIGroups.filter(
+    const newScopeVIGroups = scopeVIGroups.filter(
       (theGroup) => theGroup?.groupKey !== theGroupKey,
     )
     setScopes({
       ...scopes,
-      scopeI: [
-        ...newScopeIGroups,
+      scopeVI: [
+        ...newScopeVIGroups,
       ],
     })
   }
 
   return (
     <>
-      {scopeIGroups.map((theGroup, index) => {
+      {scopeVIGroups.map((theGroup, index) => {
         const key = theGroup?.groupKey || nanoid()
         return (
-          <CheckScopeITable
+          <CheckScopeVITable
             key={key}
             groupKey={key}
             groupIndex={index}
@@ -75,4 +73,4 @@ const ScopeIPage = () => {
   )
 }
 
-export default ScopeIPage
+export default ScopeVIPage

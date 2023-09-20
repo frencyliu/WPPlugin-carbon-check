@@ -9,14 +9,18 @@ import { nanoid } from 'nanoid'
 import { gwpMapping, convertUnitToTons } from '@/utils'
 import { ProjectContext } from '@/pages/Check'
 import { TableDataContext } from '@/pages/Check/ScopeI/CheckScopeITable'
+import { TScopes } from '@/types'
 
 export const FormContext = createContext<any | null>(null)
 const AddRecordButton = () => {
   const form = Form.useFormInstance()
-  const { scopes, setScopes } = useContext(ProjectContext)
+  const { scopes, setScopes, scopesNumber } = useContext(ProjectContext)
   const { groupIndex, groupKey } = useContext(TableDataContext)
-  const scopeIGroups = scopes?.scopeI || []
-  const group = scopeIGroups.find((theGroup) => theGroup.groupKey === groupKey)
+
+  const scopeIGroups: TScopes = scopes[scopesNumber] || []
+  const group = scopeIGroups.find(
+    (theGroup: { groupKey: any }) => theGroup.groupKey === groupKey,
+  )
   const dataSource = group?.dataSource || []
 
   const [
@@ -32,42 +36,42 @@ const AddRecordButton = () => {
   const resetFormData = () => {
     form.resetFields([
       [
-        'scopeI',
+        scopesNumber,
         groupIndex,
         'sourceName',
       ],
       [
-        'scopeI',
+        scopesNumber,
         groupIndex,
         'period',
       ],
       [
-        'scopeI',
+        scopesNumber,
         groupIndex,
         'yearlyAmount',
       ],
       [
-        'scopeI',
+        scopesNumber,
         groupIndex,
         'monthlyAmount',
       ],
       [
-        'scopeI',
+        scopesNumber,
         groupIndex,
         'hourlyAmount',
       ],
       [
-        'scopeI',
+        scopesNumber,
         groupIndex,
         'hours',
       ],
       [
-        'scopeI',
+        scopesNumber,
         groupIndex,
         'gwp',
       ],
       [
-        'scopeI',
+        scopesNumber,
         groupIndex,
         'unit',
       ],
@@ -80,8 +84,7 @@ const AddRecordButton = () => {
   }
 
   const handleData = () => {
-    const formData = form.getFieldsValue().scopeI[groupIndex]
-
+    const formData = form.getFieldsValue()?.[scopesNumber][groupIndex]
     const getYearlyAmount = (theFormData: any) => {
       switch (theFormData?.period) {
         case 'yearly':
@@ -143,7 +146,9 @@ const AddRecordButton = () => {
         const newDataSource = handleData()
         const newScopes = JSON.parse(JSON.stringify(scopes))
 
-        newScopes.scopeI[groupIndex].dataSource = newDataSource
+        if (newScopes && newScopes[scopesNumber]) {
+          newScopes[scopesNumber][groupIndex].dataSource = newDataSource
+        }
 
         setScopes(newScopes)
       })
@@ -158,7 +163,7 @@ const AddRecordButton = () => {
 
   const period = Form.useWatch(
     [
-      'scopeI',
+      scopesNumber,
       groupIndex,
       'period',
     ],
@@ -193,7 +198,7 @@ const AddRecordButton = () => {
               <Form.Item
                 // hasFeedback={true}
                 name={[
-                  'scopeI',
+                  scopesNumber,
                   groupIndex,
                   'sourceName',
                 ]}
@@ -204,7 +209,7 @@ const AddRecordButton = () => {
 
               <Form.Item
                 name={[
-                  'scopeI',
+                  scopesNumber,
                   groupIndex,
                   'period',
                 ]}
@@ -226,18 +231,21 @@ const AddRecordButton = () => {
                 <GWPYearlyFormItem
                   groupIndex={groupIndex}
                   validating={validating}
+                  scopesNumber={scopesNumber}
                 />
               )}
               {period === 'monthly' && (
                 <GWPMonthlyFormItem
                   groupIndex={groupIndex}
                   validating={validating}
+                  scopesNumber={scopesNumber}
                 />
               )}
               {period === 'hourly' && (
                 <GWPHourlyFormItem
                   groupIndex={groupIndex}
                   validating={validating}
+                  scopesNumber={scopesNumber}
                 />
               )}
             </Form>

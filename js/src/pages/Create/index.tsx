@@ -31,26 +31,26 @@ const Create = () => {
 
   const handleOk = async () => {
     setConfirmLoading(true)
-    const scopeIGroupNames =
-      companyCategories.find(
-        (companyCategory) => companyCategory.name === companyCategoryName,
-      )?.scopeIDefaultValue || []
+    // const scopeIGroupNames =
+    //   companyCategories.find(
+    //     (companyCategory) => companyCategory.name === companyCategoryName,
+    //   )?.scopeIDefaultValue || []
 
-    const scopeIIGroupNames =
-      companyCategories.find(
-        (companyCategory) => companyCategory.name === companyCategoryName,
-      )?.scopeIIDefaultValue || []
+    // const scopeIIGroupNames =
+    //   companyCategories.find(
+    //     (companyCategory) => companyCategory.name === companyCategoryName,
+    //   )?.scopeIIDefaultValue || []
 
-    defaultScopes.scopeI = scopeIGroupNames.map((group) => ({
-      groupKey: `${group}#1`,
-      groupName: group,
-      dataSource: [],
-    }))
-    defaultScopes.scopeII = scopeIIGroupNames.map((group) => ({
-      groupKey: `${group}#1`,
-      groupName: group,
-      dataSource: [],
-    }))
+    // defaultScopes.scopeI = scopeIGroupNames.map((group) => ({
+    //   groupKey: `${group}#1`,
+    //   groupName: group,
+    //   dataSource: [],
+    // }))
+    // defaultScopes.scopeII = scopeIIGroupNames.map((group) => ({
+    //   groupKey: `${group}#1`,
+    //   groupName: group,
+    //   dataSource: [],
+    // }))
 
     const theScopes = {
       ...defaultScopes,

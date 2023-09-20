@@ -16,6 +16,34 @@ export const defaultScopes: TScopes = {
       dataSource: [],
     },
   ],
+  scopeIII: [
+    {
+      groupKey: '0',
+      groupName: '辦公室 #1',
+      dataSource: [],
+    },
+  ],
+  scopeIV: [
+    {
+      groupKey: '0',
+      groupName: '辦公室 #1',
+      dataSource: [],
+    },
+  ],
+  scopeV: [
+    {
+      groupKey: '0',
+      groupName: '辦公室 #1',
+      dataSource: [],
+    },
+  ],
+  scopeVI: [
+    {
+      groupKey: '0',
+      groupName: '辦公室 #1',
+      dataSource: [],
+    },
+  ],
   info: {
     title: '○○○○股份有限公司',
     content: '',
