@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { QuestionOutlined } from '@ant-design/icons'
 import { Input, Button } from 'antd'
+import { convertLanguage } from '@/utils/i18n'
 
 const CreatCompanyCategoryInput: React.FC<{
   showModal: (_name: string) => () => void
@@ -23,7 +24,7 @@ const CreatCompanyCategoryInput: React.FC<{
       <div className="aspect-[16/9] flex flex-col justify-center items-center w-full">
         <QuestionOutlined className="text-gray-300" style={{ fontSize: 48 }} />
         <div className="text-gray-300" style={{ marginTop: 24 }}>
-          找不到所屬的產業嗎
+          {convertLanguage('找不到所屬的產業嗎')}
         </div>
       </div>
       <div className="w-full py-4">
@@ -31,10 +32,10 @@ const CreatCompanyCategoryInput: React.FC<{
           <Input
             onChange={handleInpuChange}
             style={{ width: 'calc(100% - 200px)' }}
-            placeholder="自行輸入"
+            placeholder={convertLanguage('自行輸入')}
           />
           <Button onClick={handleSubmit} type="primary">
-            送出
+            {convertLanguage('送出')}
           </Button>
         </Input.Group>
       </div>

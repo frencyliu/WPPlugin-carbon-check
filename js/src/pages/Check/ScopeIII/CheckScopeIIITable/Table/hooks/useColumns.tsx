@@ -9,6 +9,7 @@ import { gwpMapping, windowOuterWidth } from '@/utils'
 import EditRecordButton from '@/pages/Check/ScopeIII/CheckScopeIIITable/Table/components/EditRecordButton'
 import { useColor } from '@/hooks'
 import { round } from 'lodash-es'
+import { convertLanguage } from '@/utils/i18n'
 
 const useColumns = () => {
   const { colorPrimary } = useColor()
@@ -122,7 +123,7 @@ const useColumns = () => {
       render: (_, record: TYearlyDataType) => (
         <p className="text-center">
           <Popconfirm
-            title="確認刪除?"
+            title={convertLanguage('確認刪除?')}
             onConfirm={() => handleDelete(record.key)}
           >
             <DeleteOutlined className="text-red-500 text-[20px]" />

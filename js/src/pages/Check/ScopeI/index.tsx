@@ -6,6 +6,7 @@ import { ProjectContext } from '@/pages/Check'
 import { TGroupData } from '@/types'
 import { nanoid } from 'nanoid'
 import { companyCategories } from '@/utils'
+import { convertLanguage } from '@/utils/i18n'
 
 const ScopeIPage = () => {
   const { projectData, scopes, setScopes } = useContext(ProjectContext)
@@ -67,7 +68,7 @@ const ScopeIPage = () => {
         onClick={handleAddGroup}
       >
         <AppstoreAddOutlined className="mr-2" />
-        新增群組
+        {convertLanguage('新增群組')}
       </Button>
     </>
   )

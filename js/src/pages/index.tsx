@@ -4,6 +4,7 @@ import ProjectsCompanyCard from '@/components/ProjectsCompanyCard'
 import ProjectsCompanyCreateButton from '@/components/ProjectsCompanyCreateButton'
 import { useMany } from '@/hooks'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { ELanguage, getLanguage, setLanguage } from '@/utils/i18n'
 
 const baseUrl = import.meta.env.VITE_BASE_URL || ''
 
@@ -51,6 +52,18 @@ function DefaultPage() {
 
   return (
     <>
+      <div className="flex justify-end">
+        <select
+          defaultValue={getLanguage()}
+          onChange={(e) => {
+            const value = e.target.value
+            setLanguage(value as ELanguage)
+          }}
+        >
+          <option value={ELanguage.zh}>中文</option>
+          <option value={ELanguage.en}>English</option>
+        </select>
+      </div>
       {!!projects ? (
         <>
           <Row

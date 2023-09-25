@@ -7,6 +7,7 @@ import { handleClearZero, sourceNames } from '@/utils'
 import { ProjectContext } from '@/pages/Check'
 import { TableDataContext } from '@/pages/Check/ScopeII/CheckScopeIITable'
 import ExtendableSelect from '../ExtendableSelect'
+import { convertLanguage } from '@/utils/i18n'
 
 export const FormContext = createContext<any | null>(null)
 const AddRecordButton = () => {
@@ -135,17 +136,17 @@ const AddRecordButton = () => {
     <>
       <Button onClick={showModal} type="primary" className="mt-4">
         <FolderAddFilled className="mr-2" />
-        新增電力來源
+        {convertLanguage('新增電力來源')}
       </Button>
       <Modal
-        title="新增電力來源"
+        title={convertLanguage('新增電力來源')}
         open={isModalOpen}
         onOk={handleModalOk}
         centered
         width={600}
         onCancel={handleCancel}
-        okText="新增電力來源"
-        cancelText="取消"
+        okText={convertLanguage('新增電力來源')}
+        cancelText={convertLanguage('取消')}
       >
         <Form
           form={form}

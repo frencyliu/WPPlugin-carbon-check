@@ -18,6 +18,7 @@ import { Scrollbars } from 'react-custom-scrollbars-2'
 import ScopeV from './ScopeV'
 import ScopeVI from './ScopeVI'
 import ScopeIII from './ScopeIII'
+import { convertLanguage } from '@/utils/i18n'
 
 export const ProjectContext = createContext<{
   projectData: any
@@ -87,12 +88,12 @@ const App: React.FC = () => {
     },
     {
       key: '7',
-      label: '報表',
+      label: `${convertLanguage('報表')}`,
       children: <Chart />,
     },
     {
       key: '8',
-      label: '匯出',
+      label: `${convertLanguage('匯出')}`,
       children: <Export />,
     },
   ]

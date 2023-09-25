@@ -1,6 +1,7 @@
 import React from 'react'
 import type { TUnit } from '@/types'
 import { round } from 'lodash-es'
+import { convertLanguage } from '@/utils/i18n'
 
 export const windowOuterWidth = window?.outerWidth || 1200
 
@@ -134,14 +135,14 @@ const baseUrl = import.meta.env.VITE_BASE_URL || ''
 export const defaultRouterMetas = [
   {
     path: baseUrl,
-    title: '所有專案',
+    title: convertLanguage('所有專案'),
   },
   {
     path: `${baseUrl}create`,
-    title: '選擇你的公司分類',
+    title: convertLanguage('選擇你的公司分類'),
   },
   {
     path: `${baseUrl}check`,
-    title: '碳盤查',
+    title: convertLanguage('碳盤查'),
   },
 ]

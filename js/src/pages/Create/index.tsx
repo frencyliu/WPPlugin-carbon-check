@@ -5,6 +5,7 @@ import CreatCompanyCategoryInput from '@/pages/Create/CreatCompanyCategoryInput'
 import { companyCategories, defaultScopes } from '@/utils'
 import { useNavigate } from 'react-router-dom'
 import { createResource } from '@/api'
+import { convertLanguage } from '@/utils/i18n'
 
 const baseUrl = import.meta.env.VITE_BASE_URL || ''
 
@@ -64,7 +65,7 @@ const Create = () => {
       const createResult = await createResource({
         resource: 'carbon-project',
         args: {
-          title: '○○○○股份有限公司',
+          title: convertLanguage('○○○○股份有限公司'),
           status: 'publish',
           meta: {
             project_data: JSON.stringify(theScopes),
@@ -137,18 +138,24 @@ const Create = () => {
         />
       </Col>
       <Modal
-        title={<>創建專案 - 分類: {companyCategoryName}</>}
+        title={
+          <>
+            {convertLanguage('創建專案 - 分類:')} {companyCategoryName}
+          </>
+        }
         centered
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        okText="確認創建專案"
-        cancelText="再想想"
+        okText={convertLanguage('確認創建專案')}
+        cancelText={convertLanguage('再想想')}
         confirmLoading={confirmLoading}
       >
         <Alert
           className="my-8"
-          message="按下確認後會創建專案，下一頁可以填寫更多資訊"
+          message={convertLanguage(
+            '按下確認後會創建專案，下一頁可以填寫更多資訊',
+          )}
           type="info"
           showIcon
         />

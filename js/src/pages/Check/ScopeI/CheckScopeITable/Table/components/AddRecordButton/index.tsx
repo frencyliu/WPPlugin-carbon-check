@@ -10,6 +10,7 @@ import { gwpMapping, convertUnitToTons } from '@/utils'
 import { ProjectContext } from '@/pages/Check'
 import { TableDataContext } from '@/pages/Check/ScopeI/CheckScopeITable'
 import { TScopes } from '@/types'
+import { convertLanguage } from '@/utils/i18n'
 
 export const FormContext = createContext<any | null>(null)
 const AddRecordButton = () => {
@@ -174,18 +175,18 @@ const AddRecordButton = () => {
     <>
       <Button onClick={showModal} type="primary" className="mt-4">
         <FolderAddFilled className="mr-2" />
-        新增設備
+        {convertLanguage('新增設備')}
       </Button>
       <Modal
-        title="新增設備"
+        title={convertLanguage('新增設備')}
         open={isModalOpen}
         onOk={handleModalOk}
         centered
         width={648}
         className="cc-modal"
         onCancel={handleCancel}
-        okText="新增設備"
-        cancelText="取消"
+        okText={convertLanguage('新增設備')}
+        cancelText={convertLanguage('取消')}
       >
         <div className="w-ful overflow-x-auto">
           <div className="min-w-[600px]">

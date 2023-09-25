@@ -18,6 +18,7 @@ import { createResource } from '@/api'
 import { addKey } from '@/utils'
 import { useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
+import { convertLanguage } from '@/utils/i18n'
 
 const baseUrl = import.meta.env.VITE_BASE_URL || ''
 
@@ -93,7 +94,7 @@ const JsonUpload = () => {
     const createResult = await createResource({
       resource: 'carbon-project',
       args: {
-        title: scopes?.info?.title || '○○○○股份有限公司',
+        title: scopes?.info?.title || convertLanguage('○○○○股份有限公司'),
         content: scopes?.info?.content || '',
         status: 'publish',
         featured_media: scopes?.info?.imgData?.attachmentId || 0,
@@ -122,10 +123,10 @@ const JsonUpload = () => {
   return (
     <>
       <Button icon={<UploadOutlined />} onClick={showJsonUploadModal}>
-        使用 JSON 檔案上傳
+        {convertLanguage('使用 JSON 檔案上傳')}
       </Button>
       <Modal
-        title="匯入專案 JSON 數據"
+        title={convertLanguage('匯入專案 JSON 數據')}
         centered
         open={isJsonUploadModalOpen}
         onOk={handleJsonUploadOk}
@@ -145,7 +146,7 @@ const JsonUpload = () => {
                 className="w-full"
                 icon={isLoading ? <LoadingOutlined /> : <UploadOutlined />}
               >
-                使用 JSON 檔案上傳
+                {convertLanguage('使用 JSON 檔案上傳')}
               </Button>
             </Upload>
           </Col>
@@ -156,15 +157,15 @@ const JsonUpload = () => {
               onClick={handleImport}
               icon={<ImportOutlined />}
             >
-              確認匯入 JSON
+              {convertLanguage('確認匯入 JSON')}
             </Button>
           </Col>
           {showLink && (
             <Col span={24} className="mt-4">
-              <Divider plain>已成功創建專案</Divider>
+              <Divider plain>{convertLanguage('已成功創建專案')}</Divider>
               <Link to={`${baseUrl}check`} state={{ id: theProjectId }}>
                 <Button type="primary" className="w-full">
-                  立即查看專案
+                  {convertLanguage('立即查看專案')}
                 </Button>
               </Link>
             </Col>

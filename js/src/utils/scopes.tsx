@@ -1,6 +1,7 @@
 import { jsxData } from '@/pages/Check/components/EditProjectButtons/Line/defaultData'
 import { TScopes } from '@/types'
 import { nanoid } from 'nanoid'
+import { convertLanguage } from './i18n'
 
 export const defaultScopes: TScopes = {
   scopeI: [
@@ -46,7 +47,7 @@ export const defaultScopes: TScopes = {
     },
   ],
   info: {
-    title: '○○○○股份有限公司',
+    title: convertLanguage('○○○○股份有限公司'),
     content: '',
     companyCategory: '未分類',
     imgData: {

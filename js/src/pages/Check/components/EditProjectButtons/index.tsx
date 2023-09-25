@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { deleteResource } from '@/api'
 import { ProjectContext } from '@/pages/Check'
 import LineComponent from './Line'
+import { convertLanguage } from '@/utils/i18n'
 
 const EditProjectButtons: React.FC<{
   isDiff: boolean
@@ -122,7 +123,7 @@ const EditProjectButtons: React.FC<{
                     style={{ color: colorInfo }}
                     className="mr-2"
                   />
-                  記得儲存資料
+                  {convertLanguage('記得儲存資料')}
                 </>
               }
               open={isDiff}
@@ -133,7 +134,7 @@ const EditProjectButtons: React.FC<{
                 size="large"
                 onClick={handleUpdate}
               >
-                更新專案資料
+                {convertLanguage('更新專案資料')}
               </Button>
             </Popover>
 
@@ -143,7 +144,7 @@ const EditProjectButtons: React.FC<{
               danger
               onClick={showDeleteProjectModal}
             >
-              刪除專案
+              {convertLanguage('刪除專案')}
             </Button>
             <Modal
               title={
@@ -152,7 +153,7 @@ const EditProjectButtons: React.FC<{
                   style={{ color: colorError, backgroundColor: colorErrorBg }}
                 >
                   <WarningFilled className="mr-2" />
-                  確認刪除整個專案嗎？
+                  {convertLanguage('確認刪除整個專案嗎？')}
                 </p>
               }
               open={isDeleteProjectModalOpen}
@@ -160,19 +161,21 @@ const EditProjectButtons: React.FC<{
               onCancel={handleDeleteProjectCancel}
               okButtonProps={{ danger: true }}
               centered
-              okText="確認刪除"
+              okText={convertLanguage('確認刪除')}
               cancelText="取消"
             >
-              <p>刪除專案後，所有資料將不可復原</p>
+              <p>{convertLanguage('刪除專案後，所有資料將不可復原')}</p>
               <p>
-                如果您確認刪除此專案，請在下方輸入「
+                {convertLanguage('如果您確認刪除此專案，請在下方輸入')}「
                 {projectData?.title?.rendered}」
               </p>
               <Input
                 value={deleteInputValue}
                 onChange={handleDeleteInputChange}
                 size="large"
-                placeholder={`請輸入「${projectData?.title?.rendered}」`}
+                placeholder={`${convertLanguage('請輸入')}「${
+                  projectData?.title?.rendered
+                }」`}
               />
               {deleteInputValidateMsg && (
                 <p style={{ color: colorError }}>{deleteInputValidateMsg}</p>
@@ -186,11 +189,11 @@ const EditProjectButtons: React.FC<{
               size="large"
               onClick={showUpdateEmissionCoefficientOpen}
             >
-              修改排放係數
+              {convertLanguage('修改排放係數')}
             </Button>
           ) : null}
           <Modal
-            title="排放來源"
+            title={convertLanguage('排放來源')}
             open={isUpdateEmissionCoefficientOpen}
             onOk={handleUpdateEmissionCoefficientOk}
             onCancel={handleUpdateEmissionCoefficientCancel}
@@ -202,10 +205,10 @@ const EditProjectButtons: React.FC<{
                   type="primary"
                   onClick={handleUpdateEmissionCoefficientOk}
                 >
-                  確認修改來源
+                  {convertLanguage('確認修改來源')}
                 </Button>
                 <Button onClick={handleUpdateEmissionCoefficientCancel}>
-                  取消
+                  {convertLanguage('取消')}
                 </Button>
               </>
             }

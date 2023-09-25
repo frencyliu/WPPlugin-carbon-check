@@ -2,6 +2,7 @@ import React from 'react'
 import { PlusOutlined } from '@ant-design/icons'
 import ProjectsImportButton from '@/components/ProjectsImportButton'
 import { Link } from 'react-router-dom'
+import { convertLanguage } from '@/utils/i18n'
 
 const baseUrl = import.meta.env.VITE_BASE_URL || ''
 
@@ -16,7 +17,7 @@ const ProjectsCompanyCreateButton = () => {
           <div className="text-center">
             <PlusOutlined className="text-gray-300" style={{ fontSize: 48 }} />
             <div className="text-gray-300" style={{ marginTop: 24 }}>
-              新增公司資料
+              {convertLanguage('新增公司資料')}
             </div>
           </div>
         </Link>

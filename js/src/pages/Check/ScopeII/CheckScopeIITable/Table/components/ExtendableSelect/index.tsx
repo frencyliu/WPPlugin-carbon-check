@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
 import { Divider, Input, Select, Space, Button, InputRef, Form } from 'antd'
 import { sourceNames } from '@/utils'
+import { convertLanguage } from '@/utils/i18n'
 
 let index = 0
 
@@ -57,13 +58,13 @@ const ExtendableSelect: React.FC<{
             <Divider style={{ margin: '8px 0' }} />
             <Space style={{ padding: '0 8px 4px' }}>
               <Input
-                placeholder="自行輸入"
+                placeholder={convertLanguage('自行輸入')}
                 ref={inputRef}
                 value={name}
                 onChange={onNameChange}
               />
               <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
-                新增
+                {convertLanguage('新增')}
               </Button>
             </Space>
           </>
