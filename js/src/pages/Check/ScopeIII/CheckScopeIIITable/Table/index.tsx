@@ -4,7 +4,7 @@ import { Table, Row, Button, Form, Popconfirm } from 'antd'
 import AddRecordButton from './components/AddRecordButton'
 import type { TYearlyDataType } from './types'
 import useColumns from './hooks/useColumns'
-import { TableDataContext } from '@/pages/Check/ScopeI/CheckScopeITable'
+import { TableDataContext } from '@/pages/Check/ScopeIII/CheckScopeIIITable'
 import { DeleteFilled } from '@ant-design/icons'
 import useMonthlyTable from './hooks/useMonthlyTable'
 import type { ColumnType } from 'antd/lib/table'
@@ -17,9 +17,13 @@ const App: React.FC = () => {
   const { colorPrimary } = useColor()
   const columns = useColumns()
   const { renderTable } = useMonthlyTable()
-  const { scopes, printMode = false, scopesNumber } = useContext(ProjectContext)
+  const {
+    projectData: projectContextData,
+    scopes,
+    printMode = false,
+    scopesNumber,
+  } = useContext(ProjectContext)
   const scopeNumberGroups = scopes[scopesNumber] || []
-
   const initialValues = companyCategories.find(
     (companyCategory) => companyCategory.name === scopes?.info?.companyCategory,
   )?.scopeIDefaultValue || ['辦公室']
@@ -35,6 +39,7 @@ const App: React.FC = () => {
     scopeNumberGroups.find(
       (group: { groupKey: any }) => group.groupKey === groupKey,
     )?.dataSource || []
+  const id = projectContextData?.id || 0
   const form = Form.useFormInstance()
   // const data = JSON.parse(projectContextData?.meta?.project_data || '{}')
 
@@ -57,7 +62,6 @@ const App: React.FC = () => {
   const handleDelete = (theGroupKey: string) => () => {
     handleDeleteGroup(theGroupKey)
   }
-
   return (
     <div>
       {element}

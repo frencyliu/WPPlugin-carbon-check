@@ -16,8 +16,8 @@ import EditProjectModal from './components/EditProjectModal'
 import EditProjectButtons from './components/EditProjectButtons'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import ScopeV from './ScopeV'
-import { set } from 'zod'
 import ScopeVI from './ScopeVI'
+import ScopeIII from './ScopeIII'
 
 export const ProjectContext = createContext<{
   projectData: any
@@ -44,7 +44,6 @@ const App: React.FC = () => {
     isDiff,
     setIsDiff,
   ] = useState(false)
-  console.log('scopes', scopes)
   const [
     printMode,
     setPrintMode,
@@ -55,54 +54,45 @@ const App: React.FC = () => {
     setScopesNumber,
   ] = useState('scopeI')
 
-  const handlePrintMode = (enablePrintMode: boolean, number: string) => () => {
-    setPrintMode(enablePrintMode)
-    if (number) {
-      setScopesNumber(number)
-    }
-  }
-
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: <span onClick={handlePrintMode(false, 'scopeI')}>SCOPE I</span>,
+      label: 'SCOPE I',
       children: <ScopeI />,
     },
     {
       key: '2',
-      label: <span onClick={handlePrintMode(false, 'scopeII')}>SCOPE II</span>,
+      label: 'SCOPE II',
       children: <ScopeII />,
     },
     {
       key: '3',
-      label: (
-        <span onClick={handlePrintMode(false, 'scopeIII')}>SCOPE III</span>
-      ),
-      children: <ScopeI />,
+      label: 'SCOPE III',
+      children: <ScopeIII />,
     },
     {
       key: '4',
-      label: <span onClick={handlePrintMode(false, 'scopeIV')}>SCOPE IV</span>,
+      label: 'SCOPE IV',
       children: <ScopeI />,
     },
     {
       key: '5',
-      label: <span onClick={handlePrintMode(false, 'scopeV')}>SCOPE V</span>,
+      label: 'SCOPE V',
       children: <ScopeV />,
     },
     {
       key: '6',
-      label: <span onClick={handlePrintMode(false, 'scopeVI')}>SCOPE VI</span>,
+      label: 'SCOPE VI',
       children: <ScopeVI />,
     },
     {
       key: '7',
-      label: <span onClick={handlePrintMode(true, '')}>報表</span>,
+      label: '報表',
       children: <Chart />,
     },
     {
       key: '8',
-      label: <span onClick={handlePrintMode(true, '')}>匯出</span>,
+      label: '匯出',
       children: <Export />,
     },
   ]
@@ -123,7 +113,6 @@ const App: React.FC = () => {
     const content = form.getFieldValue(['content'])
     const companyCategory = form.getFieldValue(['companyCategory'])
     const copyScopes = JSON.parse(JSON.stringify(scopes || defaultScopes))
-    console.log('copyScopes', form.getFieldsValue() || {})
     const updateScope = (scopeString: string) => {
       return copyScopes[scopeString]?.map(
         (theGroup: TGroupData, groupIndex: number) => ({
@@ -138,7 +127,7 @@ const App: React.FC = () => {
       )
     }
 
-    const updateScopes = {
+    const updateScopes: TScopes = {
       ...copyScopes,
       scopeI: updateScope('scopeI'),
       scopeII: updateScope('scopeII'),
@@ -152,6 +141,7 @@ const App: React.FC = () => {
         content,
         companyCategory,
       },
+      coefficientDiff: copyScopes.coefficientDiff || [],
     }
 
     try {
@@ -178,7 +168,6 @@ const App: React.FC = () => {
   useEffect(() => {
     if (!!projectData) {
       const fectchScopes = JSON.parse(projectData.meta.project_data)
-      console.log('fectchScopes', fectchScopes)
       setScopes(fectchScopes)
       form.setFieldValue(['title'], fectchScopes?.info?.title)
       form.setFieldValue(
@@ -210,6 +199,28 @@ const App: React.FC = () => {
     sessionStorage.setItem('navigateInfo', JSON.stringify(navigateInfo))
   }, [])
 
+  const handleTabClick = (key: string) => {
+    // 在这里执行自定义操作，根据选中的选项卡
+    const selectedItem = items.find((item) => item.key === key)
+
+    if (selectedItem) {
+      if (
+        typeof selectedItem.label === 'string' &&
+        selectedItem.label.includes('SCOPE')
+      ) {
+        setPrintMode(false)
+        setScopesNumber(
+          selectedItem.label
+            ?.toString()
+            .replace('SCOPE', 'scope')
+            .replace(/\s+/g, ''),
+        )
+      } else {
+        setPrintMode(true)
+      }
+    }
+  }
+
   return (
     <>
       <Scrollbars
@@ -228,8 +239,7 @@ const App: React.FC = () => {
           >
             <Form form={form}>
               <hr style={{ borderColor: colorPrimary }} />
-
-              <Row align="middle" className="my-8">
+              <Row align="middle" className="mt-8">
                 <Col flex="auto">
                   <EditProjectModal />
                 </Col>
@@ -240,9 +250,14 @@ const App: React.FC = () => {
                   />
                 </Col>
               </Row>
-
               <div className="w-full border-2 border-gray-500">
-                <Tabs tabPosition="left" items={items} />
+                <Tabs
+                  tabPosition="left"
+                  items={items}
+                  onTabClick={(e) => {
+                    handleTabClick(e)
+                  }}
+                />
               </div>
             </Form>
           </ProjectContext.Provider>

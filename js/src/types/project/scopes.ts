@@ -1,4 +1,5 @@
 import { TYearlyDataType } from '@/pages/Check/ScopeI/CheckScopeITable/Table/types'
+import { IDefaultData } from '@/pages/Check/components/EditProjectButtons/Line/defaultData'
 
 export type TGroupData = {
   groupKey: string
@@ -25,4 +26,5 @@ export type TScopes = {
   scopeV: TGroupData[]
   scopeVI: TGroupData[]
   info: TInfo
+  coefficientDiff: IDefaultData[]
 }

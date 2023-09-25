@@ -4,6 +4,7 @@ import CheckChartColumn from '@/components/CheckChartColumn'
 import CheckChartPie from '@/components/CheckChartPie'
 import CheckScopeITable from '@/pages/Check/ScopeI/CheckScopeITable'
 import CheckScopeIITable from '@/pages/Check/ScopeII/CheckScopeIITable'
+import CheckScopeIIITable from '@/pages/Check/ScopeIII/CheckScopeIIITable'
 
 import { ProjectContext } from '@/pages/Check'
 import { TYearlyDataType } from '@/pages/Check/ScopeI/CheckScopeITable/Table/types'
@@ -25,10 +26,18 @@ const Export = () => {
   const postId = projectData?.id
   const scopeIGroups: TGroupData[] = scopes?.scopeI || []
   const scopeIIGroups: TGroupData[] = scopes?.scopeII || []
+  const scopeIIIGroups: TGroupData[] = scopes?.scopeIII || []
+  const scopeIVGroups: TGroupData[] = scopes?.scopeIV || []
+  const scopeVGroups: TGroupData[] = scopes?.scopeV || []
+  const scopeVIGroups: TGroupData[] = scopes?.scopeVI || []
 
   const mergedDataSource: TYearlyDataType[] = flatten([
     ...(scopeIGroups.map((group) => group?.dataSource) || []),
     ...(scopeIIGroups.map((group) => group?.dataSource) || []),
+    ...(scopeIIIGroups.map((group) => group?.dataSource) || []),
+    ...(scopeIVGroups.map((group) => group?.dataSource) || []),
+    ...(scopeVGroups.map((group) => group?.dataSource) || []),
+    ...(scopeVIGroups.map((group) => group?.dataSource) || []),
   ])
 
   const [
@@ -123,6 +132,7 @@ const Export = () => {
             </div>
           )}
         </Row>
+        <div>SCOPE I</div>
         {scopeIGroups.map((theGroup, index) => {
           return (
             <CheckScopeITable
@@ -134,10 +144,58 @@ const Export = () => {
             />
           )
         })}
-
+        <div>SCOPE II</div>
         {scopeIIGroups.map((theGroup, index) => {
           return (
             <CheckScopeIITable
+              key={theGroup?.groupKey}
+              groupKey={theGroup?.groupKey}
+              groupIndex={index}
+              groupData={theGroup}
+              postId={postId}
+            />
+          )
+        })}
+        <div>SCOPE III</div>
+        {scopeIIIGroups.map((theGroup, index) => {
+          return (
+            <CheckScopeIIITable
+              key={theGroup?.groupKey}
+              groupKey={theGroup?.groupKey}
+              groupIndex={index}
+              groupData={theGroup}
+              postId={postId}
+            />
+          )
+        })}
+        <div>SCOPE IV</div>
+        {scopeIVGroups.map((theGroup, index) => {
+          return (
+            <CheckScopeITable
+              key={theGroup?.groupKey}
+              groupKey={theGroup?.groupKey}
+              groupIndex={index}
+              groupData={theGroup}
+              postId={postId}
+            />
+          )
+        })}
+        <div>SCOPE V</div>
+        {scopeVGroups.map((theGroup, index) => {
+          return (
+            <CheckScopeITable
+              key={theGroup?.groupKey}
+              groupKey={theGroup?.groupKey}
+              groupIndex={index}
+              groupData={theGroup}
+              postId={postId}
+            />
+          )
+        })}
+        <div>SCOPE VI</div>
+        {scopeVIGroups.map((theGroup, index) => {
+          return (
+            <CheckScopeITable
               key={theGroup?.groupKey}
               groupKey={theGroup?.groupKey}
               groupIndex={index}

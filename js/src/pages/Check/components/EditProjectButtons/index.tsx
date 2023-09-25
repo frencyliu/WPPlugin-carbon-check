@@ -1,17 +1,24 @@
 import React, { useState, useContext, ChangeEvent, useEffect } from 'react'
-import { Button, Modal, Popover, Input, notification } from 'antd'
+import { Button, Modal, Popover, Input, notification, FormInstance } from 'antd'
 import { InfoCircleOutlined, WarningFilled } from '@ant-design/icons'
 import { useColor } from '@/hooks'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { deleteResource } from '@/api'
 import { ProjectContext } from '@/pages/Check'
+import LineComponent from './Line'
 
 const EditProjectButtons: React.FC<{
   isDiff: boolean
   handleUpdate: () => void
 }> = ({ isDiff, handleUpdate }) => {
   const { colorInfo, colorError, colorErrorBg } = useColor()
-  const { projectData, printMode = false } = useContext(ProjectContext)
+  const {
+    projectData,
+    scopes,
+    setScopes,
+    printMode = false,
+    scopesNumber,
+  } = useContext(ProjectContext)
   const { state } = useLocation()
   const id = state?.id
 
@@ -75,6 +82,32 @@ const EditProjectButtons: React.FC<{
       })
     }
   }, [isDiff])
+
+  const [
+    isUpdateEmissionCoefficientOpen,
+    setIsUpdateEmissionCoefficientOpen,
+  ] = useState(false)
+
+  const showUpdateEmissionCoefficientOpen = () => {
+    setIsUpdateEmissionCoefficientOpen(true)
+  }
+
+  const handleUpdateEmissionCoefficientOk = () => {
+    handleUpdate()
+    setIsUpdateEmissionCoefficientOpen(false)
+    setIsCoefficientDiff(false)
+  }
+  const handleUpdateEmissionCoefficientCancel = () => {
+    const fectchScopes = JSON.parse(projectData.meta.project_data)
+    setScopes(fectchScopes)
+    setIsUpdateEmissionCoefficientOpen(false)
+    setIsCoefficientDiff(false)
+  }
+
+  const [
+    isCoefficientDiff,
+    setIsCoefficientDiff,
+  ] = useState(false)
 
   return (
     <>
@@ -146,6 +179,46 @@ const EditProjectButtons: React.FC<{
               )}
             </Modal>
           </div>
+          {scopesNumber === 'scopeIII' || scopesNumber === 'scopeIV' ? (
+            <Button
+              className="mt-2"
+              type="primary"
+              size="large"
+              onClick={showUpdateEmissionCoefficientOpen}
+            >
+              修改排放係數
+            </Button>
+          ) : null}
+          <Modal
+            title="排放來源"
+            open={isUpdateEmissionCoefficientOpen}
+            onOk={handleUpdateEmissionCoefficientOk}
+            onCancel={handleUpdateEmissionCoefficientCancel}
+            centered
+            footer={
+              <>
+                <Button
+                  className={`${isCoefficientDiff ? 'animate-pulse' : ''}`}
+                  type="primary"
+                  onClick={handleUpdateEmissionCoefficientOk}
+                >
+                  確認修改來源
+                </Button>
+                <Button onClick={handleUpdateEmissionCoefficientCancel}>
+                  取消
+                </Button>
+              </>
+            }
+            width={650}
+          >
+            <div style={{ height: '500px', overflow: 'auto' }}>
+              <LineComponent
+                setIsCoefficientDiff={setIsCoefficientDiff}
+                scopes={scopes}
+                setScopes={setScopes}
+              />
+            </div>
+          </Modal>
         </>
       ) : null}
     </>

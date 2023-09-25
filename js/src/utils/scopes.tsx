@@ -1,3 +1,4 @@
+import { jsxData } from '@/pages/Check/components/EditProjectButtons/Line/defaultData'
 import { TScopes } from '@/types'
 import { nanoid } from 'nanoid'
 
@@ -53,6 +54,7 @@ export const defaultScopes: TScopes = {
       url: '',
     },
   },
+  coefficientDiff: jsxData,
 }
 
 export const removeKey = (scopes: TScopes) => {
