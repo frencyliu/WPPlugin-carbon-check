@@ -39,9 +39,10 @@ function enqueue_script(): void
     ]
   );
 
-  wp_localize_script(PROJECT_NAME, 'userData', array(
+  wp_localize_script(PROJECT_NAME, 'appData', array(
     'userName' => wp_get_current_user()->user_login,
     'userId' => wp_get_current_user()->data->ID,
+    'locale' => get_locale(),
   ));
 
   wp_localize_script(PROJECT_NAME, 'wpApiSettings', array(

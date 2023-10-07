@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import CheckScopeITable from '@/pages/Check/ScopeI/CheckScopeITable'
+import CheckScopeIIITable from '@/pages/Check/ScopeIII/CheckScopeIIITable'
 import { Button } from 'antd'
 import { AppstoreAddOutlined } from '@ant-design/icons'
 import { ProjectContext } from '@/pages/Check'
@@ -8,11 +8,11 @@ import { nanoid } from 'nanoid'
 import { companyCategories } from '@/utils'
 import { convertLanguage } from '@/utils/i18n'
 
-const ScopeIPage = () => {
+const ScopeIVPage = () => {
   const { projectData, scopes, setScopes } = useContext(ProjectContext)
   const postId = projectData?.id
 
-  const scopeIGroups: TGroupData[] = scopes?.scopeI || []
+  const scopeIVGroups: TGroupData[] = scopes?.scopeIV || []
 
   const groupNames =
     companyCategories.find(
@@ -23,8 +23,8 @@ const ScopeIPage = () => {
   const handleAddGroup = () => {
     setScopes({
       ...scopes,
-      scopeI: [
-        ...scopeIGroups,
+      scopeIV: [
+        ...scopeIVGroups,
         {
           groupKey: nanoid(),
           groupName: groupNames[0] || convertLanguage('辦公室'),
@@ -35,23 +35,23 @@ const ScopeIPage = () => {
   }
 
   const handleDeleteGroup = (theGroupKey: string) => {
-    const newScopeIGroups = scopeIGroups.filter(
+    const newScopeVGroups = scopeIVGroups.filter(
       (theGroup) => theGroup?.groupKey !== theGroupKey,
     )
     setScopes({
       ...scopes,
-      scopeI: [
-        ...newScopeIGroups,
+      scopeIV: [
+        ...newScopeVGroups,
       ],
     })
   }
 
   return (
     <>
-      {scopeIGroups.map((theGroup, index) => {
+      {scopeIVGroups.map((theGroup, index) => {
         const key = theGroup?.groupKey || nanoid()
         return (
-          <CheckScopeITable
+          <CheckScopeIIITable
             key={key}
             groupKey={key}
             groupIndex={index}
@@ -74,4 +74,4 @@ const ScopeIPage = () => {
   )
 }
 
-export default ScopeIPage
+export default ScopeIVPage

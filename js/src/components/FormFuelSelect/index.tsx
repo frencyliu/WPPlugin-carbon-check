@@ -1,7 +1,7 @@
 import React from 'react'
 import { Select, Form } from 'antd'
-import { convertChemicalToString } from '@/utils'
 import { jsxData } from '@/pages/Check/components/EditProjectButtons/Line/defaultData'
+import { convertLanguage, getLanguage } from '@/utils/i18n'
 
 const FormFuelSelect: React.FC<{
   name: string | Array<string | number>
@@ -20,21 +20,25 @@ const FormFuelSelect: React.FC<{
   }
 
   const options: { value: string; label: string }[] = jsxData.map((data) => ({
-    value: data.nameZh,
-    label: data.nameZh,
+    value: getLanguage() === 'zh' ? data.nameZh : data.nameEn,
+    label: getLanguage() === 'zh' ? data.nameZh : data.nameEn,
   }))
+
+  const uniqueOptions = Array.from(
+    options.reduce((map, obj) => map.set(obj.value, obj), new Map()).values(),
+  )
 
   return (
     <Select
       className={className}
       showSearch
       allowClear
-      placeholder="請選擇燃料"
+      placeholder={convertLanguage('請選擇燃料')}
       optionFilterProp="children"
       filterOption={(input, option) =>
-        convertChemicalToString(option?.label).includes(input.toLowerCase())
+        option!.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
-      options={options}
+      options={uniqueOptions}
       value={gwp}
       onSelect={handleSelect}
       onClear={handleClear}

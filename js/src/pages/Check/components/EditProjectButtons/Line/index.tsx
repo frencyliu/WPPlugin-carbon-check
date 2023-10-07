@@ -10,6 +10,7 @@ import { IDefaultData, IDefaultDataData, jsxData } from './defaultData'
 import './index.css'
 import { nanoid } from 'nanoid'
 import { TScopes } from '@/types'
+import { getLanguage } from '@/utils/i18n'
 
 const showData = (d: IDefaultDataData) => {
   return (
@@ -48,7 +49,9 @@ const LineComponents: React.FC<{
 
   return scopes.coefficientDiff.map((item) => (
     <Row key={nanoid()}>
-      <h2 className="nameZh">{item.nameZh}</h2>
+      <h2 className="nameZh">
+        {getLanguage() === 'zh' ? item.nameZh : item.nameEn}
+      </h2>
       {item.data.map((ii, index) => (
         <Col key={index}>
           <div>

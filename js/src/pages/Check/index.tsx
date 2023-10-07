@@ -18,6 +18,7 @@ import { Scrollbars } from 'react-custom-scrollbars-2'
 import ScopeV from './ScopeV'
 import ScopeVI from './ScopeVI'
 import ScopeIII from './ScopeIII'
+import ScopeIV from './ScopeIV'
 import { convertLanguage } from '@/utils/i18n'
 
 export const ProjectContext = createContext<{
@@ -74,7 +75,7 @@ const App: React.FC = () => {
     {
       key: '4',
       label: 'SCOPE IV',
-      children: <ScopeI />,
+      children: <ScopeIV />,
     },
     {
       key: '5',

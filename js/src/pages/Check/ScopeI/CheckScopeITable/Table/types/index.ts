@@ -1,5 +1,6 @@
 import type { TUnit } from '@/types'
 import type { Table } from 'antd'
+import exp from 'constants'
 import { z } from 'zod'
 
 type Item = {
@@ -44,6 +45,9 @@ export type TYearlyDataType = {
   monthlyAmount?: number[]
   hourlyAmount?: number
   unit: TUnit
+  km: string
+  kmAmount?: number
+  scopeName?: string
 }
 
 export type ColumnTypes = Exclude<EditableTableProps['columns'], undefined> & {

@@ -203,9 +203,17 @@ const AddRecordButton = () => {
                   groupIndex,
                   'sourceName',
                 ]}
-                rules={[{ required: validating, message: '請輸入設備名稱' }]}
+                rules={[
+                  {
+                    required: validating,
+                    message: convertLanguage('請輸入設備名稱'),
+                  },
+                ]}
               >
-                <Input className="mt-8" addonBefore="設備名稱" />
+                <Input
+                  className="mt-8"
+                  addonBefore={convertLanguage('設備名稱')}
+                />
               </Form.Item>
 
               <Form.Item
@@ -218,13 +226,13 @@ const AddRecordButton = () => {
               >
                 <Radio.Group className="w-full mt-8" buttonStyle="solid">
                   <Radio.Button className="w-1/3 text-center" value="yearly">
-                    年碳排放
+                    {convertLanguage('年碳排放')}
                   </Radio.Button>
                   <Radio.Button className="w-1/3 text-center" value="monthly">
-                    月碳排放
+                    {convertLanguage('月碳排放')}
                   </Radio.Button>
                   <Radio.Button className="w-1/3 text-center" value="hourly">
-                    每小時碳排放
+                    {convertLanguage('每小時碳排放')}
                   </Radio.Button>
                 </Radio.Group>
               </Form.Item>

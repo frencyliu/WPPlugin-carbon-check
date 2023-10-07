@@ -2,12 +2,14 @@ import { Pie, measureTextWidth } from '@ant-design/plots'
 import type { IData } from '@/pages/Check/Chart/interface'
 import { TYearlyDataType } from '@/pages/Check/ScopeI/CheckScopeITable/Table/types'
 import { round } from 'lodash-es'
+import { convertLanguage } from '@/utils/i18n'
 
 type IStyle = Record<string, number | string>
 
 const CheckChartPie: React.FC<{
   mergedDataSource: TYearlyDataType[]
-}> = ({ mergedDataSource }) => {
+  pieType: 'group' | 'scope'
+}> = ({ mergedDataSource, pieType }) => {
   const formatData = !!mergedDataSource
     ? mergedDataSource.map((record) => {
         const carbonTonsPerYear = record?.carbonTonsPerYear || 0
@@ -19,8 +21,23 @@ const CheckChartPie: React.FC<{
       })
     : []
 
+  // sum by scopeName
+  const sumByScopeName = (data: TYearlyDataType[]) => {
+    const result = data.reduce((r: any, d: TYearlyDataType) => {
+      const key = d.scopeName || ''
+      if (!r[key]) r[key] = 0
+      r[key] += d.carbonTonsPerYear
+      return r
+    }, {})
+    return Object.keys(result).map((key) => ({
+      type: key,
+      value: result[key],
+    }))
+  }
+
   // sum the value if the type is 辦公室1
-  const data = formatData
+  const data =
+    pieType === 'group' ? formatData : sumByScopeName(mergedDataSource)
 
   function renderStatistic(
     containerWidth: number,
@@ -80,7 +97,7 @@ const CheckChartPie: React.FC<{
         customHtml: (container: HTMLElement, _view: unknown, datum: any) => {
           const { width, height } = container.getBoundingClientRect()
           const d = Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2))
-          const text = datum ? datum.type : 'CO2排放量'
+          const text = datum ? datum.type : `CO2${convertLanguage('排放量')}`
           return renderStatistic(d, text, {
             fontSize: 28,
           })
@@ -99,8 +116,11 @@ const CheckChartPie: React.FC<{
         ) => {
           const { width } = container.getBoundingClientRect()
           const text = datum
-            ? `${datum.value}噸/年`
-            : `${theData.reduce((r: number, d: IData) => r + d.value, 0)}噸/年`
+            ? `${datum.value}${convertLanguage('噸/年')}`
+            : `${theData.reduce(
+                (r: number, d: IData) => r + d.value,
+                0,
+              )}${convertLanguage('噸/年')}`
           return renderStatistic(width, text, {
             fontSize: 16,
           })

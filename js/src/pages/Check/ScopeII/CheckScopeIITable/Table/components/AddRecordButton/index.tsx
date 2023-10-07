@@ -165,7 +165,7 @@ const AddRecordButton = () => {
             </Col>
             <Col span={12}>
               <Form.Item
-                label="使用度數(年)"
+                label={convertLanguage('使用度數(年)')}
                 name={[
                   'scopeII',
                   groupIndex,
@@ -175,7 +175,7 @@ const AddRecordButton = () => {
                 rules={[
                   {
                     required: validating,
-                    message: '請輸入使用度數',
+                    message: convertLanguage('請輸入使用度數'),
                   },
                 ]}
               >
@@ -205,7 +205,7 @@ const AddRecordButton = () => {
                 rules={[
                   {
                     required: validating,
-                    message: `請輸入${(
+                    message: `${convertLanguage('請輸入')}${(
                       <>
                         CO<sub>2</sub>(kg)/Kwh
                       </>
@@ -221,7 +221,7 @@ const AddRecordButton = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="碳排(噸/年)">
+              <Form.Item label={convertLanguage('碳排(噸/年)')}>
                 <InputNumber
                   value={(watchYearlyAmount * watchCo2Kwh) / 1000}
                   className="w-full"

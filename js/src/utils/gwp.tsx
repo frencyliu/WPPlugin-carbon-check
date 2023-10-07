@@ -1521,7 +1521,6 @@ export const convertChemicalToString = (
   jsx: JSX.Element | string | undefined,
 ) => {
   if (!jsx || typeof jsx === 'string') return ''
-
   const stringWithTags = reactElementToJSXString(jsx, {
     showDefaultProps: false,
     filterProps: ['children'],

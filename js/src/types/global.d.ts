@@ -3,9 +3,10 @@ declare global {
     root: string
     nonce: string
   }
-  var userData: {
+  var appData: {
     userName: string
     userId: string
+    locale: string
   }
 }
 

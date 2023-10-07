@@ -2,6 +2,7 @@ import { Input, InputNumber, Form, Row, Col } from 'antd'
 import { months, handleClearZero } from '@/utils'
 import FormGWPSelect from '@/components/FormGWPSelect'
 import FormUnitSelect from '@/components/FormUnitSelect'
+import { convertLanguage } from '@/utils/i18n'
 
 const GWPMonthlyFormItem: React.FC<{
   groupIndex: number
@@ -22,7 +23,7 @@ const GWPMonthlyFormItem: React.FC<{
             rules={[
               {
                 required: validating,
-                message: '請選擇溫室氣體',
+                message: convertLanguage('請選擇溫室氣體'),
               },
             ]}
           >
@@ -48,7 +49,7 @@ const GWPMonthlyFormItem: React.FC<{
             rules={[
               {
                 required: validating,
-                message: '請選擇單位',
+                message: convertLanguage('請選擇單位'),
               },
             ]}
           >
@@ -85,7 +86,7 @@ const GWPMonthlyFormItem: React.FC<{
                   rules={[
                     {
                       required: validating,
-                      message: '請輸入月排放量',
+                      message: convertLanguage('請輸入月排放量'),
                     },
                   ]}
                 >
@@ -120,7 +121,7 @@ const GWPMonthlyFormItem: React.FC<{
                   rules={[
                     {
                       required: validating,
-                      message: '請輸入月排放量',
+                      message: convertLanguage('請輸入月排放量'),
                     },
                   ]}
                 >

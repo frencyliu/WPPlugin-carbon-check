@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 import { notification } from 'antd'
 import { getTypeText, baseUrl, apiTimeout } from '@/utils'
+import { convertLanguage } from '@/utils/i18n'
 
 const wpApiSettings = window?.wpApiSettings || {}
 
@@ -19,7 +20,7 @@ instance.interceptors.response.use(
     const typeText = getTypeText(type, method, statusText)
     if (method !== 'get') {
       notification.success({
-        message: `${typeText}成功`,
+        message: `${typeText}${convertLanguage('成功')}`,
         onClick: () => {
           console.log('response', response)
         },

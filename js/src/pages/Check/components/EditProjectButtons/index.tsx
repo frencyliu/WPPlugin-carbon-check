@@ -60,7 +60,7 @@ const EditProjectButtons: React.FC<{
         console.log('deleteResult', deleteResult)
       }
     } else {
-      setDeleteInputValidateMsg('輸入的專案名稱不正確')
+      setDeleteInputValidateMsg(convertLanguage('輸入的專案名稱不正確'))
     }
   }
 
@@ -77,8 +77,8 @@ const EditProjectButtons: React.FC<{
       api.warning({
         key: 'saveReminder',
         placement: 'bottomRight',
-        message: '您有未儲存的變更',
-        description: '請記得到頁面上方更新專案資料',
+        message: convertLanguage('您有未儲存的變更'),
+        description: convertLanguage('請記得到頁面上方更新專案資料'),
         duration: 4.5,
       })
     }

@@ -2,6 +2,7 @@ import { Input, InputNumber, Form } from 'antd'
 import FormGWPSelect from '@/components/FormGWPSelect'
 import FormUnitSelect from '@/components/FormUnitSelect'
 import { handleClearZero } from '@/utils'
+import { convertLanguage } from '@/utils/i18n'
 
 const GWPHourlyFormItem: React.FC<{
   groupIndex: number
@@ -22,12 +23,12 @@ const GWPHourlyFormItem: React.FC<{
           rules={[
             {
               required: validating,
-              message: '請輸入每小時排放量',
+              message: convertLanguage('請輸入每小時排放量'),
             },
           ]}
         >
           <InputNumber
-            addonBefore="每小時排放"
+            addonBefore={convertLanguage('每小時排放')}
             className="w-full rounded-r-none"
             min={0}
             onClick={handleClearZero}
@@ -43,7 +44,7 @@ const GWPHourlyFormItem: React.FC<{
           rules={[
             {
               required: validating,
-              message: '請選擇溫室氣體',
+              message: convertLanguage('請選擇溫室氣體'),
             },
           ]}
         >
@@ -66,7 +67,7 @@ const GWPHourlyFormItem: React.FC<{
           rules={[
             {
               required: validating,
-              message: '請選擇單位',
+              message: convertLanguage('請選擇單位'),
             },
           ]}
         >
@@ -91,13 +92,13 @@ const GWPHourlyFormItem: React.FC<{
           rules={[
             {
               required: validating,
-              message: '請輸入此設備今年運轉了幾小時',
+              message: convertLanguage('請輸入此設備今年運轉了幾小時'),
             },
           ]}
         >
           <InputNumber
-            addonBefore="此設備今年運轉了"
-            addonAfter="小時"
+            addonBefore={convertLanguage('此設備今年運轉了')}
+            addonAfter={convertLanguage('小時')}
             className="w-full"
             min={0}
             onClick={handleClearZero}

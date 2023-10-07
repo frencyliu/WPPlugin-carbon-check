@@ -19,18 +19,20 @@ const App: React.FC = () => {
   const columns = useColumns()
   const { renderTable } = useMonthlyTable()
   const { scopes, printMode = false, scopesNumber } = useContext(ProjectContext)
-  const scopeNumberGroups = scopes[scopesNumber] || []
-
-  const initialValues = companyCategories.find(
-    (companyCategory) => companyCategory.name === scopes?.info?.companyCategory,
-  )?.scopeIDefaultValue || ['辦公室']
-
   const {
     groupKey,
     groupIndex,
     groupData,
     onDelete: handleDeleteGroup = () => {},
+    scopesNumberForPrint,
   } = useContext(TableDataContext)
+  const scopeNumberGroups = scopesNumberForPrint
+    ? scopes[scopesNumberForPrint]
+    : scopes[scopesNumber] || []
+
+  const initialValues = companyCategories.find(
+    (companyCategory) => companyCategory.name === scopes?.info?.companyCategory,
+  )?.scopeIDefaultValue || [convertLanguage('辦公室')]
 
   const dataSource =
     scopeNumberGroups.find(
@@ -47,7 +49,7 @@ const App: React.FC = () => {
       'groupName',
     ],
     required: true,
-    initialValue: initialValues[0] || '辦公室',
+    initialValue: initialValues[0] || convertLanguage('辦公室'),
     title: {
       theTitle: groupData?.groupName || initialValues[0],
       level: 4,

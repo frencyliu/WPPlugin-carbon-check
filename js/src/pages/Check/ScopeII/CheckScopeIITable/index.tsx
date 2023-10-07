@@ -11,6 +11,7 @@ type ICheckScopeIITableProps = {
   groupData: TGroupData
   postId: number
   onDelete?: (_id: string) => void
+  scopesNumberForPrint?: string
 }
 
 const defaultProps = {

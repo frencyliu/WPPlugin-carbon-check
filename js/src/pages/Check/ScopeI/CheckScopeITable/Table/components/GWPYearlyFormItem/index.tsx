@@ -2,6 +2,7 @@ import { Input, InputNumber, Form } from 'antd'
 import { handleClearZero } from '@/utils'
 import FormGWPSelect from '@/components/FormGWPSelect'
 import FormUnitSelect from '@/components/FormUnitSelect'
+import { convertLanguage } from '@/utils/i18n'
 
 const GWPYearlyFormItem: React.FC<{
   groupIndex: number
@@ -22,12 +23,12 @@ const GWPYearlyFormItem: React.FC<{
           rules={[
             {
               required: validating,
-              message: '請輸入年排放量',
+              message: convertLanguage('請輸入年排放量'),
             },
           ]}
         >
           <InputNumber
-            addonBefore="年排放"
+            addonBefore={convertLanguage('年排放')}
             className="w-full rounded-r-none"
             min={0}
             onClick={handleClearZero}
@@ -43,7 +44,7 @@ const GWPYearlyFormItem: React.FC<{
           rules={[
             {
               required: validating,
-              message: '請選擇溫室氣體',
+              message: convertLanguage('請選擇溫室氣體'),
             },
           ]}
         >
@@ -66,7 +67,7 @@ const GWPYearlyFormItem: React.FC<{
           rules={[
             {
               required: validating,
-              message: '請選擇單位',
+              message: convertLanguage('請選擇單位'),
             },
           ]}
         >

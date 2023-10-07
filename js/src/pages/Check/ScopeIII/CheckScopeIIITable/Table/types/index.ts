@@ -45,7 +45,7 @@ export type TYearlyDataType = {
   hourlyAmount?: number
   unit: TUnit
   km?: string
-  l?: string
+  kmAmount?: number
 }
 
 export type ColumnTypes = Exclude<EditableTableProps['columns'], undefined> & {

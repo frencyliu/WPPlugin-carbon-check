@@ -9,6 +9,7 @@ import { TableDataContext } from '@/pages/Check/ScopeII/CheckScopeIITable'
 import { useColor } from '@/hooks'
 import ExtendableSelect from '../ExtendableSelect'
 import { round } from 'lodash-es'
+import { convertLanguage } from '@/utils/i18n'
 
 export const FormContext = createContext<any | null>(null)
 const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
@@ -144,14 +145,14 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
         onClick={showModal(record)}
       />
       <Modal
-        title="編輯電力來源"
+        title={convertLanguage('編輯電力來源')}
         open={isModalOpen}
         onOk={handleModalOk}
         centered
         width={600}
         onCancel={handleCancel}
-        okText="編輯電力來源"
-        cancelText="取消"
+        okText={convertLanguage('編輯電力來源')}
+        cancelText={convertLanguage('取消')}
       >
         <Form
           form={form}
@@ -170,7 +171,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
             </Col>
             <Col span={12}>
               <Form.Item
-                label="使用度數(年)"
+                label={convertLanguage('使用度數(年)')}
                 name={[
                   'scopeII',
                   groupIndex,
@@ -180,7 +181,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
                 rules={[
                   {
                     required: validating,
-                    message: '請輸入年排放量',
+                    message: convertLanguage('請輸入年排放量'),
                   },
                 ]}
               >
@@ -206,7 +207,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
                 rules={[
                   {
                     required: validating,
-                    message: `請輸入${(
+                    message: `${convertLanguage('請輸入')}${(
                       <>
                         CO<sub>2</sub>(kg)/Kwh
                       </>
@@ -218,7 +219,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="碳排(噸/年)">
+              <Form.Item label={convertLanguage('碳排(噸/年)')}>
                 <InputNumber
                   value={(watchYearlyAmount * watchCo2Kwh) / 1000}
                   className="w-full"

@@ -27,7 +27,7 @@ const useEditableTitle = ({
     setEditableStr,
   ] = useState(initialValue)
   const { setIsDiff, scopes } = useContext(ProjectContext)
-  const initValue = name.reduce((acc: any, cur: any) => acc[cur], scopes)
+  const initValue = name.reduce((acc: any, cur: any) => acc?.[cur], scopes)
 
   const handleChange = (str: string) => {
     setEditableStr(str)

@@ -11,8 +11,10 @@ import type { ColumnType } from 'antd/lib/table'
 import { useColor, useEditableTitle } from '@/hooks'
 import { ProjectContext } from '@/pages/Check'
 import { windowOuterWidth, companyCategories } from '@/utils'
+import { convertLanguage } from '@/utils/i18n'
 
 const App: React.FC = () => {
+  console.log('render ScopeIIITable')
   const size = windowOuterWidth < 768 ? 'small' : 'middle'
   const { colorPrimary } = useColor()
   const columns = useColumns()
@@ -23,23 +25,24 @@ const App: React.FC = () => {
     printMode = false,
     scopesNumber,
   } = useContext(ProjectContext)
-  const scopeNumberGroups = scopes[scopesNumber] || []
-  const initialValues = companyCategories.find(
-    (companyCategory) => companyCategory.name === scopes?.info?.companyCategory,
-  )?.scopeIDefaultValue || ['辦公室']
-
   const {
     groupKey,
     groupIndex,
     groupData,
     onDelete: handleDeleteGroup = () => {},
+    scopesNumberForPrint,
   } = useContext(TableDataContext)
+  const scopeNumberGroups = scopesNumberForPrint
+    ? scopes[scopesNumberForPrint]
+    : scopes[scopesNumber] || []
+  const initialValues = companyCategories.find(
+    (companyCategory) => companyCategory.name === scopes?.info?.companyCategory,
+  )?.scopeIDefaultValue || [convertLanguage('辦公室')]
 
   const dataSource =
     scopeNumberGroups.find(
       (group: { groupKey: any }) => group.groupKey === groupKey,
     )?.dataSource || []
-  const id = projectContextData?.id || 0
   const form = Form.useFormInstance()
   // const data = JSON.parse(projectContextData?.meta?.project_data || '{}')
 
@@ -51,7 +54,7 @@ const App: React.FC = () => {
       'groupName',
     ],
     required: true,
-    initialValue: initialValues[0] || '辦公室',
+    initialValue: initialValues[0] || convertLanguage('辦公室'),
     title: {
       theTitle: groupData?.groupName || initialValues[0],
       level: 4,
@@ -80,14 +83,14 @@ const App: React.FC = () => {
       {!printMode && (
         <Row justify="space-between">
           <Popconfirm
-            title="確認刪除群組?"
-            okText="確認"
-            cancelText="取消"
+            title={convertLanguage('確認刪除群組?')}
+            okText={convertLanguage('確認')}
+            cancelText={convertLanguage('取消')}
             onConfirm={handleDelete(groupKey)}
           >
             <Button className="mt-4" type="dashed" danger>
               <DeleteFilled className="mr-2" />
-              刪除群組
+              {convertLanguage('刪除群組')}
             </Button>
           </Popconfirm>
           <AddRecordButton />

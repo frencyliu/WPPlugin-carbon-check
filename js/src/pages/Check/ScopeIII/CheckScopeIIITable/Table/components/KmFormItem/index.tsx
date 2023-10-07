@@ -1,13 +1,102 @@
-import { Input, Form } from 'antd'
+import { Input, Form, InputNumber, Select } from 'antd'
 import FormGWPSelect from '@/components/FormGWPSelect'
-import FormUnitSelect from '@/components/FormUnitSelect'
 import FormFuelSelect from '@/components/FormFuelSelect'
+import { handleClearZero } from '@/utils'
+import { TScopes } from '@/types'
+import { useEffect, useState } from 'react'
+import { convertLanguage } from '@/utils/i18n'
 
 const KmFormItem: React.FC<{
   groupIndex: number
   validating: boolean
   scopesNumber: string
-}> = ({ groupIndex, validating, scopesNumber }) => {
+  scopes: TScopes
+}> = ({ groupIndex, validating, scopesNumber, scopes }) => {
+  const form = Form.useFormInstance()
+  const gwp = Form.useWatch(
+    [
+      scopesNumber,
+      groupIndex,
+      'gwp',
+    ],
+    form,
+  )
+  const km = Form.useWatch(
+    [
+      scopesNumber,
+      groupIndex,
+      'km',
+    ],
+    form,
+  )
+
+  const showUnitValue = gwp && km
+
+  const [
+    unitValue,
+    setUnitValue,
+  ] = useState('')
+
+  const changeUnit = () => {
+    // 在這個效應函式中，設定 unitValue 的值
+    // 檢查 showUnitValue 是否為真
+    if (showUnitValue) {
+      // 使用 scopes.coefficientDiff 陣列的 find 方法尋找符合條件的元素
+      const foundItem = scopes.coefficientDiff.find(
+        (item) =>
+          item.nameZh ===
+            form.getFieldValue([
+              scopesNumber,
+              groupIndex,
+              'km',
+            ]) ||
+          (item.nameEn ===
+            form.getFieldValue([
+              scopesNumber,
+              groupIndex,
+              'km',
+            ]) &&
+            item.data),
+      )
+
+      if (foundItem) {
+        // 如果找到符合條件的元素，則使用 data.find 方法尋找符合條件的子元素
+        const foundDataItem = foundItem.data.find(
+          (i) =>
+            i.unit1 ===
+            form
+              .getFieldValue([
+                scopesNumber,
+                groupIndex,
+                'gwp',
+              ])
+              .toLocaleUpperCase(),
+        )
+
+        // 如果找到符合條件的子元素，則將 unitValue 設定為它的 unit1 屬性
+        if (foundDataItem) {
+          setUnitValue(foundDataItem.unit2)
+        } else {
+          // 如果找不到符合條件的子元素，則設定 unitValue 為 '123'
+          setUnitValue('')
+        }
+      } else {
+        // 如果找不到符合條件的元素，則設定 unitValue 為 '123'
+        setUnitValue('')
+      }
+    } else {
+      // 如果 showUnitValue 不為真，則設定 unitValue 為 '456'
+      setUnitValue('')
+    }
+  }
+
+  useEffect(() => {
+    changeUnit()
+  }, [
+    gwp,
+    km,
+  ])
+
   return (
     <>
       <Input.Group compact className="mb-4">
@@ -15,13 +104,28 @@ const KmFormItem: React.FC<{
           name={[
             scopesNumber,
             groupIndex,
+            'kmAmount',
+          ]}
+        >
+          <InputNumber
+            addonBefore={convertLanguage('年排放')}
+            className="w-48 mr-1"
+            placeholder={convertLanguage('排放量')}
+            min={0}
+            onClick={handleClearZero}
+          />
+        </Form.Item>
+        <Form.Item
+          name={[
+            scopesNumber,
+            groupIndex,
             'km',
           ]}
-          className="w-[calc(100%-20rem)] mb-0"
+          className="w-[calc(100%-25rem)] mb-0"
           rules={[
             {
               required: validating,
-              message: '請選擇燃料',
+              message: convertLanguage('請選擇燃料'),
             },
           ]}
         >
@@ -39,11 +143,11 @@ const KmFormItem: React.FC<{
             groupIndex,
             'gwp',
           ]}
-          className="w-60 mb-0"
+          className="w-[calc(100%-30rem)] mb-0"
           rules={[
             {
               required: validating,
-              message: '請選擇溫室氣體',
+              message: convertLanguage('請選擇溫室氣體'),
             },
           ]}
         >
@@ -55,28 +159,8 @@ const KmFormItem: React.FC<{
             ]}
           />
         </Form.Item>
-        <Form.Item
-          name={[
-            scopesNumber,
-            groupIndex,
-            'unit',
-          ]}
-          className="w-20 mb-0"
-          initialValue="kg"
-          rules={[
-            {
-              required: validating,
-              message: '請選擇單位',
-            },
-          ]}
-        >
-          <FormUnitSelect
-            name={[
-              scopesNumber,
-              groupIndex,
-              'unit',
-            ]}
-          />
+        <Form.Item>
+          <Select className={'rounded-l-none'} value={unitValue} disabled />
         </Form.Item>
       </Input.Group>
     </>

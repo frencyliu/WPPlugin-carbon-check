@@ -46,28 +46,28 @@ const useColumns = () => {
     dataIndex: string
   })[] = [
     {
-      title: '排碳設備',
+      title: convertLanguage('排碳設備'),
       align: 'center',
       dataIndex: 'sourceName',
       width: 200,
       fixed: false,
     },
     {
-      title: '溫室氣體',
+      title: convertLanguage('溫室氣體'),
       width: 160,
       align: 'center',
       dataIndex: 'gwp',
       render: (gwp) => gwpMapping.find((item) => item.value === gwp)?.label,
     },
     {
-      title: '溫室氣體排放量 (噸/年)',
+      title: convertLanguage('溫室氣體排放量 (噸/年)'),
       align: 'center',
       width: 200,
       dataIndex: 'yearlyAmount',
       render: (yearlyAmount: number) => round(yearlyAmount, 3),
     },
     {
-      title: 'GPT係數',
+      title: convertLanguage('GPT係數'),
       align: 'center',
       dataIndex: 'ar5',
       width: 120,
@@ -75,8 +75,12 @@ const useColumns = () => {
     {
       title: (
         <>
-          <Tooltip title="二氧化碳當量(CO2e, carbon dioxide equivalent)是測量碳足跡(carbon footprints)的標準單位">
-            CO<sub>2</sub>e 碳排 (噸/年){' '}
+          <Tooltip
+            title={convertLanguage(
+              '二氧化碳當量(CO2e, carbon dioxide equivalent)是測量碳足跡(carbon footprints)的標準單位',
+            )}
+          >
+            CO<sub>2</sub>e {convertLanguage('碳排 (噸/年)')}
             <InfoCircleFilled style={{ color: colorPrimary }} />
           </Tooltip>
         </>
@@ -87,7 +91,7 @@ const useColumns = () => {
       width: 200,
     },
     {
-      title: '動作',
+      title: convertLanguage('動作'),
       align: 'center',
       dataIndex: 'action',
       width: 100,

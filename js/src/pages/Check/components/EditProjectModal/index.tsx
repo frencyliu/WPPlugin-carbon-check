@@ -5,6 +5,7 @@ import { useColor } from '@/hooks'
 import { EditOutlined } from '@ant-design/icons'
 import ImageUpload from '@/components/ImageUpload'
 import { ProjectContext } from '@/pages/Check'
+import { convertLanguage } from '@/utils/i18n'
 
 const EditProjectModal = () => {
   const { colorPrimary } = useColor()
@@ -55,29 +56,29 @@ const EditProjectModal = () => {
         )}
       </h2>
       <Modal
-        title="編輯專案基本資料"
+        title= {convertLanguage('編輯專案基本資料')}
         open={isEditProjectModalOpen}
         onOk={handleEditProjectOk}
         onCancel={handleEditProjectCancel}
         centered
         okText="確認"
-        cancelText="取消"
+        cancelText={convertLanguage('取消')}
         forceRender={true}
       >
-        <p className="mb-1 mt-6">公司/專案名稱:</p>
+        <p className="mb-1 mt-6">{convertLanguage('公司/專案名稱:')}</p>
 
         <Form.Item name={['title']} noStyle>
           <Input />
         </Form.Item>
 
         {/* TODO: dropdown + add cat */}
-        <p className="mb-1 mt-6">公司/專案分類:</p>
+        <p className="mb-1 mt-6">{convertLanguage('公司/專案分類:')}</p>
 
         <Form.Item name={['companyCategory']} noStyle>
           <Input />
         </Form.Item>
 
-        <p className="mb-1 mt-6">公司/專案說明:</p>
+        <p className="mb-1 mt-6">{convertLanguage('公司/專案說明:')}</p>
 
         <Form.Item name={['content']} noStyle>
           <Input.TextArea autoSize={{ minRows: 4 }} maxLength={100} showCount />

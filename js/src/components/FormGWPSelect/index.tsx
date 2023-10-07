@@ -1,6 +1,7 @@
 import React from 'react'
 import { Select, Form } from 'antd'
 import { gwpOptions, convertChemicalToString } from '@/utils'
+import { convertLanguage } from '@/utils/i18n'
 
 const FormGWPSelect: React.FC<{
   name: string | Array<string | number>
@@ -25,7 +26,7 @@ const FormGWPSelect: React.FC<{
           className={className}
           showSearch
           allowClear
-          placeholder="請選擇或搜尋溫室氣體"
+          placeholder={convertLanguage('請選擇或搜尋溫室氣體')}
           optionFilterProp="children"
           filterOption={(input, option) =>
             convertChemicalToString(option?.label).includes(input.toLowerCase())
@@ -40,7 +41,7 @@ const FormGWPSelect: React.FC<{
           className={className}
           showSearch
           allowClear
-          placeholder="請選擇或搜尋溫室氣體"
+          placeholder={convertLanguage('請選擇或搜尋溫室氣體')}
           optionFilterProp="children"
           filterOption={(input, option) =>
             convertChemicalToString(option?.label).includes(input.toLowerCase())

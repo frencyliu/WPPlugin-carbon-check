@@ -41,17 +41,19 @@ const ExtendableSelect: React.FC<{
 
   return (
     <Form.Item
-      label="電力來源"
+      label={convertLanguage('電力來源')}
       name={[
         'scopeII',
         groupIndex,
         'sourceName',
       ]}
-      rules={[{ required: validating, message: '請輸入電力來源' }]}
+      rules={[
+        { required: validating, message: convertLanguage('請輸入電力來源') },
+      ]}
     >
       <Select
         className="w-full"
-        placeholder="選擇電力來源"
+        placeholder={convertLanguage('選擇電力來源')}
         dropdownRender={(menu) => (
           <>
             {menu}

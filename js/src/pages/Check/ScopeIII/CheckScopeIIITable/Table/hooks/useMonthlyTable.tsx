@@ -8,26 +8,27 @@ import {
   windowOuterWidth,
 } from '@/utils'
 import { ProjectContext } from '@/pages/Check'
+import { convertLanguage } from '@/utils/i18n'
 
 const useMonthlyTable = () => {
   const { printMode = false } = useContext(ProjectContext)
   const columns: (ColumnTypes[number] & { dataIndex: string })[] = [
     {
-      title: '月份',
+      title: convertLanguage('月份'),
       align: 'center',
       dataIndex: 'month',
       width: 200,
       fixed: false,
     },
     {
-      title: '溫室氣體',
+      title: convertLanguage('溫室氣體'),
       width: 160,
       align: 'center',
       dataIndex: 'gwp',
       render: (gwp) => gwpMapping.find((item) => item.value === gwp)?.label,
     },
     {
-      title: '溫室氣體排放量 (噸/月)',
+      title: convertLanguage('溫室氣體排放量 (噸/月)'),
       align: 'center',
       dataIndex: 'monthlyAmount',
       width: 200,
@@ -38,7 +39,7 @@ const useMonthlyTable = () => {
         }),
     },
     {
-      title: 'GPT係數',
+      title: convertLanguage('GPT係數'),
       align: 'center',
       dataIndex: 'ar5',
       width: 120,
@@ -55,7 +56,7 @@ const useMonthlyTable = () => {
         }),
     },
     {
-      title: '碳排(噸/月)',
+      title: convertLanguage('碳排(噸/月)'),
       align: 'center',
       dataIndex: 'carbonTonsPerMonth',
       width: 200,

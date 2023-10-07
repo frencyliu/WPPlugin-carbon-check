@@ -1,3 +1,5 @@
+import { locale } from './env'
+
 interface I18n {
   zh: string
   en: string
@@ -189,12 +191,16 @@ const constants: I18n[] = [
     en: 'After deleting the project, all data will not be recoverable',
   },
   {
-    zh: '如果您確認刪除此專案，請在下方輸入 ',
+    zh: '如果您確認刪除此專案，請在下方輸入',
     en: 'If you are sure to delete this project, please enter ',
   },
   {
     zh: '確認修改來源',
     en: 'Confirm Modify Source',
+  },
+  {
+    zh: '輸入的專案名稱不正確',
+    en: 'The project name entered is incorrect',
   },
   {
     zh: '修改排放係數',
@@ -220,19 +226,410 @@ const constants: I18n[] = [
     zh: '匯出',
     en: 'Export',
   },
+  {
+    zh: '排碳設備',
+    en: 'Carbon Equipment',
+  },
+  {
+    zh: '溫室氣體',
+    en: 'Greenhouse Gas',
+  },
+  {
+    zh: '溫室氣體排放量 (噸/年)',
+    en: 'Greenhouse Gas Emissions (t/year)',
+  },
+  {
+    zh: 'GPT係數',
+    en: 'GPT Coefficient',
+  },
+  {
+    zh: '二氧化碳當量(CO2e, carbon dioxide equivalent)是測量碳足跡(carbon footprints)的標準單位',
+    en: 'Carbon dioxide equivalent (CO2e) is the standard unit for measuring carbon footprints',
+  },
+  {
+    zh: '動作',
+    en: 'Action',
+  },
+  {
+    zh: '碳排 (噸/年)',
+    en: 'Emissions (t/year)',
+  },
+  {
+    zh: '辦公室',
+    en: 'Office',
+  },
+  {
+    zh: '辦公室 #1',
+    en: 'Office #1',
+  },
+  {
+    zh: '工廠',
+    en: 'Factory',
+  },
+  {
+    zh: '餐廳',
+    en: 'Restaurant',
+  },
+  {
+    zh: '醫院',
+    en: 'Hospital',
+  },
+  {
+    zh: '旅館',
+    en: 'Hotel',
+  },
+  {
+    zh: '農場',
+    en: 'Farm',
+  },
+  {
+    zh: '車隊',
+    en: 'Fleet',
+  },
+  {
+    zh: '年碳排放',
+    en: 'Annual Carbon Emissions',
+  },
+  {
+    zh: '月碳排放',
+    en: 'Monthly Carbon Emissions',
+  },
+  {
+    zh: '每小時碳排放',
+    en: 'Hourly Carbon Emissions',
+  },
+  {
+    zh: '年排放',
+    en: 'Annual Emissions',
+  },
+  {
+    zh: '請輸入年排放量',
+    en: 'Please enter annual emissions',
+  },
+  {
+    zh: '請選擇溫室氣體',
+    en: 'Please select a greenhouse gas',
+  },
+  {
+    zh: '請選擇單位',
+    en: 'Please select a unit',
+  },
+  {
+    zh: '排放量',
+    en: 'Emissions',
+  },
+  {
+    zh: '請選擇燃料',
+    en: 'Please select a fuel',
+  },
+  {
+    zh: '編輯電力來源',
+    en: 'Edit Electricity Source',
+  },
+  {
+    zh: '使用度數(年)',
+    en: 'Usage (year)',
+  },
+  {
+    zh: '請輸入年排放量',
+    en: 'Please enter annual emissions',
+  },
+  {
+    zh: '碳排(噸/年)',
+    en: 'Emissions (t/year)',
+  },
+  {
+    zh: '噸/年',
+    en: 't/year',
+  },
+  {
+    zh: '成功',
+    en: 'Success',
+  },
+  {
+    zh: '編輯專案基本資料',
+    en: 'Edit Project Basic Information',
+  },
+  {
+    zh: '公司/專案名稱:',
+    en: 'Company/Project Name:',
+  },
+  {
+    zh: '公司/專案分類:',
+    en: 'Company/Project Category:',
+  },
+  {
+    zh: '公司/專案說明:',
+    en: 'Company/Project Description:',
+  },
+  {
+    zh: '編輯設備',
+    en: 'Edit Equipment',
+  },
+  {
+    zh: '刪除群組',
+    en: 'Delete Group',
+  },
+  {
+    zh: '一月',
+    en: 'January',
+  },
+  {
+    zh: '二月',
+    en: 'February',
+  },
+  {
+    zh: '三月',
+    en: 'March',
+  },
+  {
+    zh: '四月',
+    en: 'April',
+  },
+  {
+    zh: '五月',
+    en: 'May',
+  },
+  {
+    zh: '六月',
+    en: 'June',
+  },
+  {
+    zh: '七月',
+    en: 'July',
+  },
+  {
+    zh: '八月',
+    en: 'August',
+  },
+  {
+    zh: '九月',
+    en: 'September',
+  },
+  {
+    zh: '十月',
+    en: 'October',
+  },
+  {
+    zh: '十一月',
+    en: 'November',
+  },
+  {
+    zh: '十二月',
+    en: 'December',
+  },
+  {
+    zh: '獲取',
+    en: 'Get ',
+  },
+  {
+    zh: '更新',
+    en: 'Update ',
+  },
+  {
+    zh: '刪除',
+    en: 'Delete ',
+  },
+  {
+    zh: '更新',
+    en: 'Update ',
+  },
+  {
+    zh: '專案',
+    en: 'Project ',
+  },
+  {
+    zh: '圖片',
+    en: 'Image',
+  },
+  {
+    zh: '圖片上傳',
+    en: 'Image Upload',
+  },
+  {
+    zh: '創建',
+    en: 'Create ',
+  },
+  {
+    zh: '請輸入設備名稱',
+    en: 'Please enter equipment name',
+  },
+  {
+    zh: '設備名稱',
+    en: 'Equipment Name',
+  },
+  {
+    zh: '每小時排放',
+    en: 'Hourly Emissions',
+  },
+  {
+    zh: '請輸入每小時排放量',
+    en: 'Please enter hourly emissions',
+  },
+  {
+    zh: '請選擇溫室氣體',
+    en: 'Please select a greenhouse gas',
+  },
+  {
+    zh: '請輸入此設備今年運轉了幾小時',
+    en: 'Please enter the number of hours this equipment has been running this year',
+  },
+  {
+    zh: '此設備今年運轉了',
+    en: 'This equipment has been running for ',
+  },
+  {
+    zh: '小時',
+    en: 'hours',
+  },
+  {
+    zh: '請選擇燃料',
+    en: 'Please select a fuel',
+  },
+  {
+    zh: '請選擇或搜尋溫室氣體',
+    en: 'Please select or search for greenhouse gases',
+  },
+  {
+    zh: '請選擇溫室氣體',
+    en: 'Please select a greenhouse gas',
+  },
+  {
+    zh: '請選擇單位',
+    en: 'Please select a unit',
+  },
+  {
+    zh: '請輸入月排放量',
+    en: 'Please enter monthly emissions',
+  },
+  {
+    zh: '沒有資料',
+    en: 'No data',
+  },
+  {
+    zh: '分析事項',
+    en: 'Analysis',
+  },
+  {
+    zh: '建議事項',
+    en: 'Suggestion',
+  },
+  {
+    zh: '月份',
+    en: 'Month',
+  },
+  {
+    zh: '溫室氣體',
+    en: 'Greenhouse Gas',
+  },
+  {
+    zh: '碳排(噸/月)',
+    en: 'Emissions (t/month)',
+  },
+  {
+    zh: 'GPT係數',
+    en: 'GPT Coefficient',
+  },
+  {
+    zh: '溫室氣體排放量 (噸/月)',
+    en: 'Greenhouse Gas Emissions (t/month)',
+  },
+  {
+    zh: '溫室氣體',
+    en: 'Greenhouse Gas',
+  },
+  {
+    zh: '運輸設備',
+    en: 'Transportation Equipment',
+  },
+  {
+    zh: '上傳中...',
+    en: 'Uploading...',
+  },
+  {
+    zh: '上傳圖片',
+    en: 'Upload Image',
+  },
+  {
+    zh: '建議尺寸: 400 X 225 px',
+    en: 'Suggested size: 400 X 225 px',
+  },
+  {
+    zh: '支援檔名:',
+    en: 'Supported file names:',
+  },
+  {
+    zh: '您有未儲存的變更',
+    en: 'You have unsaved changes',
+  },
+  {
+    zh: '請記得到頁面上方更新專案資料',
+    en: 'Remember to update the project data at the top of the page',
+  },
+  {
+    zh: '電力來源',
+    en: 'Electricity Source',
+  },
+  {
+    zh: '請輸入電力來源',
+    en: 'Please enter electricity source',
+  },
+  {
+    zh: '選擇電力來源',
+    en: 'Select electricity source',
+  },
+  {
+    zh: '使用度數 (年)',
+    en: 'Usage (year)',
+  },
+  {
+    zh: '匯出為 JSON 數據',
+    en: 'Export as JSON data',
+  },
+  {
+    zh: '匯出為 PDF',
+    en: 'Export as PDF',
+  },
+  {
+    zh: '調整格式中...',
+    en: 'Adjusting format...',
+  },
+  {
+    zh: '請稍候...',
+    en: 'Please wait...',
+  },
+  {
+    zh: '碳盤查 JSON 數據',
+    en: 'Carbon Inventory JSON Data',
+  },
+  {
+    zh: '下載',
+    en: 'Download',
+  },
+  {
+    zh: '複製',
+    en: 'Copy',
+  },
+  {
+    zh: '請輸入使用度數',
+    en: 'Please enter usage',
+  },
 ]
 
 export enum ELanguage {
-  zh = 'zh',
-  en = 'en',
+  zh = 'zh_TW',
+  en = 'en_US',
 }
 
 export const getLanguage = () => {
-  return (localStorage.getItem('language') as keyof I18n) || ELanguage.zh
-}
-export const setLanguage = (language: ELanguage) => {
-  localStorage.setItem('language', language)
-  window.location.reload()
+  switch (locale) {
+    case ELanguage.zh:
+      return 'zh'
+    case ELanguage.en:
+      return 'en'
+    default:
+      return 'zh'
+  }
 }
 
 export const convertLanguage = (text: string) => {

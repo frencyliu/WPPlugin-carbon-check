@@ -7,6 +7,7 @@ import {
 import { Upload, UploadProps, Tag, Button } from 'antd'
 import { createResource } from '@/api'
 import { ProjectContext } from '@/pages/Check'
+import { convertLanguage } from '@/utils/i18n'
 
 const { Dragger } = Upload
 
@@ -91,14 +92,18 @@ const ImageUpload = () => {
             {isLoading ? <LoadingOutlined /> : <FileImageOutlined />}
           </p>
           <p className="ant-upload-text">
-            {isLoading ? '上傳中...' : '上傳圖片'}
+            {isLoading
+              ? convertLanguage('上傳中...')
+              : convertLanguage('上傳圖片')}
           </p>
           <div className="flex justify-center px-4">
             <div className="text-xs text-left  w-80">
-              <p className="mb-0">建議尺寸: 400 X 225 px</p>
               <p className="mb-0">
-                支援檔名: <Tag>.jpg</Tag>, <Tag>jpeg</Tag>, <Tag>gif</Tag>,{' '}
-                <Tag>.png</Tag>
+                {convertLanguage('建議尺寸: 400 X 225 px')}
+              </p>
+              <p className="mb-0">
+                {convertLanguage('支援檔名:')} <Tag>.jpg</Tag>, <Tag>jpeg</Tag>,{' '}
+                <Tag>gif</Tag>, <Tag>.png</Tag>
               </p>
             </div>
           </div>

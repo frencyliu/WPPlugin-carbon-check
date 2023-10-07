@@ -11,51 +11,51 @@ export const renderHTML = (rawHTML: string) =>
 export const months = [
   {
     value: 0,
-    label: '一月',
+    label: convertLanguage('一月'),
   },
   {
     value: 1,
-    label: '二月',
+    label: convertLanguage('二月'),
   },
   {
     value: 2,
-    label: '三月',
+    label: convertLanguage('三月'),
   },
   {
     value: 3,
-    label: '四月',
+    label: convertLanguage('四月'),
   },
   {
     value: 4,
-    label: '五月',
+    label: convertLanguage('五月'),
   },
   {
     value: 5,
-    label: '六月',
+    label: convertLanguage('六月'),
   },
   {
     value: 6,
-    label: '七月',
+    label: convertLanguage('七月'),
   },
   {
     value: 7,
-    label: '八月',
+    label: convertLanguage('八月'),
   },
   {
     value: 8,
-    label: '九月',
+    label: convertLanguage('九月'),
   },
   {
     value: 9,
-    label: '十月',
+    label: convertLanguage('十月'),
   },
   {
     value: 10,
-    label: '十一月',
+    label: convertLanguage('十一月'),
   },
   {
     value: 11,
-    label: '十二月',
+    label: convertLanguage('十二月'),
   },
 ]
 
@@ -97,13 +97,13 @@ export const getTypeText = (
   const getMethodText = (theMethod: string) => {
     switch (theMethod) {
       case 'get':
-        return '獲取'
+        return convertLanguage('獲取')
       case 'post':
-        return '更新'
+        return convertLanguage('更新')
       case 'delete':
-        return '刪除'
+        return convertLanguage('刪除')
       default:
-        return '更新'
+        return convertLanguage('更新')
     }
   }
 
@@ -111,19 +111,19 @@ export const getTypeText = (
   const getResourceText = (theResource: string) => {
     switch (theResource) {
       case 'carbon-project':
-        return '專案'
+        return convertLanguage('專案')
       case 'attachment':
-        return '圖片'
+        return convertLanguage('圖片')
     }
   }
   const resourceText = getResourceText(resource)
 
   switch (resource + '-' + method) {
     case 'attachment-post':
-      return '圖片上傳'
+      return convertLanguage('圖片上傳')
     case 'carbon-project-post':
       return statusText === 'Created'
-        ? `${resourceText}創建`
+        ? `${resourceText}${convertLanguage('創建')}`
         : `${resourceText}${methodText}`
     default:
       return `${resourceText}${methodText}`

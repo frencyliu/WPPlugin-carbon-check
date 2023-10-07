@@ -27,7 +27,7 @@ const ScopeVIPage = () => {
         ...scopeVIGroups,
         {
           groupKey: nanoid(),
-          groupName: groupNames[0] || '辦公室',
+          groupName: groupNames[0] || convertLanguage('辦公室'),
           dataSource: [],
         },
       ],

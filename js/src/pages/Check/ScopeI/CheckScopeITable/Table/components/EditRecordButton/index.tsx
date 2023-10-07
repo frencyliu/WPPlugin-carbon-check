@@ -11,6 +11,7 @@ import { ProjectContext } from '@/pages/Check'
 import { TableDataContext } from '@/pages/Check/ScopeI/CheckScopeITable'
 import { useColor } from '@/hooks'
 import { round } from 'lodash-es'
+import { convertLanguage } from '@/utils/i18n'
 
 export const FormContext = createContext<any | null>(null)
 const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
@@ -169,15 +170,15 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
         onClick={showModal(record)}
       />
       <Modal
-        title="編輯設備"
+        title={convertLanguage('編輯設備')}
         open={isModalOpen}
         onOk={handleModalOk}
         centered
         width={648}
         className="cc-modal"
         onCancel={handleCancel}
-        okText="編輯設備"
-        cancelText="取消"
+        okText={convertLanguage('編輯設備')}
+        cancelText={convertLanguage('取消')}
       >
         <div className="w-ful overflow-x-auto">
           <div className="min-w-[600px]">
@@ -194,9 +195,17 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
                   groupIndex,
                   'sourceName',
                 ]}
-                rules={[{ required: validating, message: '請輸入設備名稱' }]}
+                rules={[
+                  {
+                    required: validating,
+                    message: convertLanguage('請輸入設備名稱'),
+                  },
+                ]}
               >
-                <Input className="mt-8" addonBefore="設備名稱" />
+                <Input
+                  className="mt-8"
+                  addonBefore={convertLanguage('設備名稱')}
+                />
               </Form.Item>
 
               <Form.Item
@@ -209,13 +218,13 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
               >
                 <Radio.Group className="w-full mt-8" buttonStyle="solid">
                   <Radio.Button className="w-1/3 text-center" value="yearly">
-                    年碳排放
+                    {convertLanguage('年碳排放')}
                   </Radio.Button>
                   <Radio.Button className="w-1/3 text-center" value="monthly">
-                    月碳排放
+                    {convertLanguage('月碳排放')}
                   </Radio.Button>
                   <Radio.Button className="w-1/3 text-center" value="hourly">
-                    每小時碳排放
+                    {convertLanguage('每小時碳排放')}
                   </Radio.Button>
                 </Radio.Group>
               </Form.Item>

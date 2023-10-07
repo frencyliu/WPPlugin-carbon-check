@@ -7,42 +7,42 @@ export const defaultScopes: TScopes = {
   scopeI: [
     {
       groupKey: '0',
-      groupName: '辦公室 #1',
+      groupName: convertLanguage('辦公室 #1'),
       dataSource: [],
     },
   ],
   scopeII: [
     {
       groupKey: '0',
-      groupName: '辦公室 #1',
+      groupName: convertLanguage('辦公室 #1'),
       dataSource: [],
     },
   ],
   scopeIII: [
     {
       groupKey: '0',
-      groupName: '辦公室 #1',
+      groupName: convertLanguage('辦公室 #1'),
       dataSource: [],
     },
   ],
   scopeIV: [
     {
       groupKey: '0',
-      groupName: '辦公室 #1',
+      groupName: convertLanguage('辦公室 #1'),
       dataSource: [],
     },
   ],
   scopeV: [
     {
       groupKey: '0',
-      groupName: '辦公室 #1',
+      groupName: convertLanguage('辦公室 #1'),
       dataSource: [],
     },
   ],
   scopeVI: [
     {
       groupKey: '0',
-      groupName: '辦公室 #1',
+      groupName: convertLanguage('辦公室 #1'),
       dataSource: [],
     },
   ],
