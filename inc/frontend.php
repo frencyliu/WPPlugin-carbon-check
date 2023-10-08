@@ -13,8 +13,8 @@ use Kucrut\Vite;
  */
 function bootstrap(): void
 {
-  add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_script');
-  add_action('wp_footer', __NAMESPACE__ . '\\render_app');
+	add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_script');
+	add_action('wp_footer', __NAMESPACE__ . '\\render_app');
 }
 
 /**
@@ -22,7 +22,7 @@ function bootstrap(): void
  */
 function render_app(): void
 {
-  printf('<div id="my-app" class="my-app"></div>');
+	printf('<div id="my-app" class="my-app"></div>');
 }
 
 /**
@@ -30,26 +30,33 @@ function render_app(): void
  */
 function enqueue_script(): void
 {
-  Vite\enqueue_asset(
-    dirname(__DIR__) . '/js/dist',
-    'js/src/main.tsx',
-    [
-      'handle' => PROJECT_NAME,
-      'in-footer' => true,
-    ]
-  );
+	Vite\enqueue_asset(
+		dirname(__DIR__) . '/js/dist',
+		'js/src/main.tsx',
+		[
+			'handle' => PROJECT_NAME,
+			'in-footer' => true,
+		]
+	);
 
-  wp_localize_script(PROJECT_NAME, 'appData', array(
-    'userName' => wp_get_current_user()->user_login,
-    'userId' => wp_get_current_user()->data->ID,
-    'locale' => get_locale(),
-  ));
 
-  wp_localize_script(PROJECT_NAME, 'wpApiSettings', array(
-    'root' => esc_url_raw(rest_url()),
-    'nonce' => wp_create_nonce('wp_rest'),
-  ));
+	$appData = [
+		'locale' => \get_locale(),
+	];
+
+	if (\is_user_logged_in()) {
+		$appData['userName'] = \wp_get_current_user()->user_login;
+		$appData['userId'] = \wp_get_current_user()->data->ID;
+	}
+
+	\wp_localize_script(PROJECT_NAME, 'appData', $appData);
+
+	\wp_localize_script(PROJECT_NAME, 'wpApiSettings', array(
+		'root' => \esc_url_raw(rest_url()),
+		'nonce' => \wp_create_nonce('wp_rest'),
+	));
 }
+
 
 
 

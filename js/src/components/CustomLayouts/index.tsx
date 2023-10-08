@@ -13,6 +13,8 @@ const CustomLayouts = () => {
   ] = useState<string>('')
 
   useEffect(() => {
+    console.log('⭐  defaultRouterMetas:', pathname, defaultRouterMetas)
+
     const newTitle =
       defaultRouterMetas.find((item) => item.path === pathname)?.title || ''
     setTitle(newTitle)

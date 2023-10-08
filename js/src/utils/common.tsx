@@ -130,19 +130,17 @@ export const getTypeText = (
   }
 }
 
-const baseUrl = import.meta.env.VITE_BASE_URL || ''
-
 export const defaultRouterMetas = [
   {
-    path: baseUrl,
+    path: '/',
     title: convertLanguage('所有專案'),
   },
   {
-    path: `${baseUrl}create`,
+    path: '/create',
     title: convertLanguage('選擇你的公司分類'),
   },
   {
-    path: `${baseUrl}check`,
+    path: '/check',
     title: convertLanguage('碳盤查'),
   },
 ]

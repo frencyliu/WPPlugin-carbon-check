@@ -191,16 +191,6 @@ const App: React.FC = () => {
     }
   }, [scopes])
 
-  useEffect(() => {
-    const navigateInfo = {
-      path: 'check',
-      state: {
-        id,
-      },
-    }
-    sessionStorage.setItem('navigateInfo', JSON.stringify(navigateInfo))
-  }, [])
-
   const handleTabClick = (key: string) => {
     // 在这里执行自定义操作，根据选中的选项卡
     const selectedItem = items.find((item) => item.key === key)

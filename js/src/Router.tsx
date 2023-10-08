@@ -2,25 +2,23 @@ import CustomLayouts from '@/components/CustomLayouts'
 import DefaultPage from '@/pages/'
 import Create from '@/pages/Create'
 import Check from '@/pages/Check'
-import { createBrowserRouter } from 'react-router-dom'
+import { createHashRouter } from 'react-router-dom'
 
-const baseUrl = import.meta.env.VITE_BASE_URL || ''
-
-export const defaultRouters = createBrowserRouter([
+export const defaultRouters = createHashRouter([
   {
-    path: baseUrl,
+    path: '',
     element: <CustomLayouts />,
     children: [
       {
-        path: '',
+        path: '/',
         element: <DefaultPage />,
       },
       {
-        path: 'create',
+        path: '/create',
         element: <Create />,
       },
       {
-        path: 'check',
+        path: '/check',
         element: <Check />,
       },
     ],

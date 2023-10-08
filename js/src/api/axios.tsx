@@ -1,12 +1,12 @@
 import axios, { AxiosInstance } from 'axios'
 import { notification } from 'antd'
-import { getTypeText, baseUrl, apiTimeout } from '@/utils'
+import { getTypeText, apiUrl, apiTimeout } from '@/utils'
 import { convertLanguage } from '@/utils/i18n'
 
 const wpApiSettings = window?.wpApiSettings || {}
 
 const instance: AxiosInstance = axios.create({
-  baseURL: baseUrl,
+  baseURL: apiUrl,
   timeout: parseInt(apiTimeout, 10),
   headers: { 'X-WP-Nonce': wpApiSettings?.nonce || '' },
 })

@@ -7,8 +7,6 @@ import { useNavigate } from 'react-router-dom'
 import { createResource } from '@/api'
 import { convertLanguage } from '@/utils/i18n'
 
-const baseUrl = import.meta.env.VITE_BASE_URL || ''
-
 const Create = () => {
   const [
     isModalOpen,
@@ -75,7 +73,7 @@ const Create = () => {
 
       setIsModalOpen(false)
       setConfirmLoading(false)
-      navigate(`${baseUrl}check`, {
+      navigate('/check', {
         state: {
           id: createResult.data?.id || 0,
           defaultScopes,
@@ -91,14 +89,6 @@ const Create = () => {
   const handleCancel = () => {
     setIsModalOpen(false)
   }
-
-  useEffect(() => {
-    const navigateInfo = {
-      path: 'create',
-      state: null,
-    }
-    sessionStorage.setItem('navigateInfo', JSON.stringify(navigateInfo))
-  }, [])
 
   return (
     <Row

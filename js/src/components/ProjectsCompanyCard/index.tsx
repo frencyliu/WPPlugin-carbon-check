@@ -5,7 +5,6 @@ import defaultImage from '@/static/defaultImage.jpg'
 import { renderHTML } from '@/utils'
 
 const { Meta } = Card
-const baseUrl = import.meta.env.VITE_BASE_URL || ''
 
 const ProjectsCompanyCard: React.FC<{
   id: number
@@ -13,7 +12,7 @@ const ProjectsCompanyCard: React.FC<{
   description: string
   image: any
 }> = ({ id, title, description, image }) => (
-  <Link to={`${baseUrl}check`} state={{ id }}>
+  <Link to="check" state={{ id }}>
     <Card
       className="aspect-[3/4] w-full"
       cover={

@@ -20,8 +20,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { convertLanguage } from '@/utils/i18n'
 
-const baseUrl = import.meta.env.VITE_BASE_URL || ''
-
 const JsonUpload = () => {
   const [
     isLoading,
@@ -163,7 +161,7 @@ const JsonUpload = () => {
           {showLink && (
             <Col span={24} className="mt-4">
               <Divider plain>{convertLanguage('已成功創建專案')}</Divider>
-              <Link to={`${baseUrl}check`} state={{ id: theProjectId }}>
+              <Link to="check" state={{ id: theProjectId }}>
                 <Button type="primary" className="w-full">
                   {convertLanguage('立即查看專案')}
                 </Button>
