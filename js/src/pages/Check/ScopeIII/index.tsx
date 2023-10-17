@@ -13,7 +13,6 @@ const ScopeIIIPage = () => {
   const postId = projectData?.id
 
   const scopeIIIGroups: TGroupData[] = scopes?.scopeIII || []
-  console.log('scopeIIIGroups', scopeIIIGroups)
   const groupNames =
     companyCategories.find(
       (companyCategory) =>

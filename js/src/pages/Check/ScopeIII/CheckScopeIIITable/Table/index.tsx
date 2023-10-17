@@ -14,7 +14,6 @@ import { windowOuterWidth, companyCategories } from '@/utils'
 import { convertLanguage } from '@/utils/i18n'
 
 const App: React.FC = () => {
-  console.log('render ScopeIIITable')
   const size = windowOuterWidth < 768 ? 'small' : 'middle'
   const { colorPrimary } = useColor()
   const columns = useColumns()

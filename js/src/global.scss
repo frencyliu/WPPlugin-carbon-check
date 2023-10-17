@@ -43,6 +43,8 @@ body {
     width: 297mm;
     margin: 0 !important;
     padding: 10mm !important;
-    overflow: hidden;
+  }
+  * {
+    page-break-inside: avoid;
   }
 }

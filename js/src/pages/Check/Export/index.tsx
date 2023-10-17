@@ -153,16 +153,28 @@ const Export = () => {
         <Row gutter={24}>
           {mergedDataSource.length > 0 ? (
             <>
-              <Col span={24} lg={{ span: 12 }} className="mb-12">
+              <Col
+                span={24}
+                lg={{ span: 18 }}
+                className="mb-12 mx-auto text-center lg:text-left"
+              >
                 <CheckChartColumn mergedDataSource={mergedDataSource} />
               </Col>
-              <Col span={24} lg={{ span: 6 }} className="mb-12">
+              <Col
+                span={24}
+                lg={{ span: 12 }}
+                className="mb-12 mx-auto text-center lg:text-left"
+              >
                 <CheckChartPie
                   mergedDataSource={mergedDataSource}
                   pieType="group"
                 />
               </Col>
-              <Col span={24} lg={{ span: 6 }} className="mb-12">
+              <Col
+                span={24}
+                lg={{ span: 12 }}
+                className="mb-12 mx-auto text-center lg:text-left"
+              >
                 <CheckChartPie
                   mergedDataSource={mergedDataSource}
                   pieType="scope"
@@ -177,83 +189,95 @@ const Export = () => {
             </div>
           )}
         </Row>
-        <div>SCOPE I</div>
-        {scopeIGroups.map((theGroup, index) => {
-          return (
-            <CheckScopeITable
-              key={theGroup?.groupKey}
-              groupKey={theGroup?.groupKey}
-              groupIndex={index}
-              groupData={theGroup}
-              postId={postId}
-              scopesNumberForPrint="scopeI"
-            />
-          )
-        })}
-        <div>SCOPE II</div>
-        {scopeIIGroups.map((theGroup, index) => {
-          return (
-            <CheckScopeIITable
-              key={theGroup?.groupKey}
-              groupKey={theGroup?.groupKey}
-              groupIndex={index}
-              groupData={theGroup}
-              postId={postId}
-            />
-          )
-        })}
-        <div>SCOPE III</div>
-        {scopeIIIGroups.map((theGroup, index) => {
-          return (
-            <CheckScopeIIITable
-              key={theGroup?.groupKey}
-              groupKey={theGroup?.groupKey}
-              groupIndex={index}
-              groupData={theGroup}
-              postId={postId}
-              scopesNumberForPrint="scopeIII"
-            />
-          )
-        })}
-        <div>SCOPE IV</div>
-        {scopeIVGroups.map((theGroup, index) => {
-          return (
-            <CheckScopeIIITable
-              key={theGroup?.groupKey}
-              groupKey={theGroup?.groupKey}
-              groupIndex={index}
-              groupData={theGroup}
-              postId={postId}
-              scopesNumberForPrint="scopeIV"
-            />
-          )
-        })}
-        <div>SCOPE V</div>
-        {scopeVGroups.map((theGroup, index) => {
-          return (
-            <CheckScopeITable
-              key={theGroup?.groupKey}
-              groupKey={theGroup?.groupKey}
-              groupIndex={index}
-              groupData={theGroup}
-              postId={postId}
-              scopesNumberForPrint="scopeV"
-            />
-          )
-        })}
-        <div>SCOPE VI</div>
-        {scopeVIGroups.map((theGroup, index) => {
-          return (
-            <CheckScopeITable
-              key={theGroup?.groupKey}
-              groupKey={theGroup?.groupKey}
-              groupIndex={index}
-              groupData={theGroup}
-              postId={postId}
-              scopesNumberForPrint="scopeVI"
-            />
-          )
-        })}
+        <div>
+          <div>SCOPE I</div>
+          {scopeIGroups.map((theGroup, index) => {
+            return (
+              <CheckScopeITable
+                key={theGroup?.groupKey}
+                groupKey={theGroup?.groupKey}
+                groupIndex={index}
+                groupData={theGroup}
+                postId={postId}
+                scopesNumberForPrint="scopeI"
+              />
+            )
+          })}
+        </div>
+        <div>
+          <div>SCOPE II</div>
+          {scopeIIGroups.map((theGroup, index) => {
+            return (
+              <CheckScopeIITable
+                key={theGroup?.groupKey}
+                groupKey={theGroup?.groupKey}
+                groupIndex={index}
+                groupData={theGroup}
+                postId={postId}
+              />
+            )
+          })}
+        </div>
+        <div>
+          <div>SCOPE III</div>
+          {scopeIIIGroups.map((theGroup, index) => {
+            return (
+              <CheckScopeIIITable
+                key={theGroup?.groupKey}
+                groupKey={theGroup?.groupKey}
+                groupIndex={index}
+                groupData={theGroup}
+                postId={postId}
+                scopesNumberForPrint="scopeIII"
+              />
+            )
+          })}
+        </div>
+        <div>
+          <div>SCOPE IV</div>
+          {scopeIVGroups.map((theGroup, index) => {
+            return (
+              <CheckScopeIIITable
+                key={theGroup?.groupKey}
+                groupKey={theGroup?.groupKey}
+                groupIndex={index}
+                groupData={theGroup}
+                postId={postId}
+                scopesNumberForPrint="scopeIV"
+              />
+            )
+          })}
+        </div>
+        <div>
+          <div>SCOPE V</div>
+          {scopeVGroups.map((theGroup, index) => {
+            return (
+              <CheckScopeITable
+                key={theGroup?.groupKey}
+                groupKey={theGroup?.groupKey}
+                groupIndex={index}
+                groupData={theGroup}
+                postId={postId}
+                scopesNumberForPrint="scopeV"
+              />
+            )
+          })}
+        </div>
+        <div>
+          <div>SCOPE VI</div>
+          {scopeVIGroups.map((theGroup, index) => {
+            return (
+              <CheckScopeITable
+                key={theGroup?.groupKey}
+                groupKey={theGroup?.groupKey}
+                groupIndex={index}
+                groupData={theGroup}
+                postId={postId}
+                scopesNumberForPrint="scopeVI"
+              />
+            )
+          })}
+        </div>
       </div>
       <Row className="my-8" gutter={24}>
         <Col className="my-2" span={24} lg={{ span: 12 }}>

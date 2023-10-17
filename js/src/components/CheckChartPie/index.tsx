@@ -31,7 +31,7 @@ const CheckChartPie: React.FC<{
     }, {})
     return Object.keys(result).map((key) => ({
       type: key,
-      value: result[key],
+      value: round(result[key], 1),
     }))
   }
 
