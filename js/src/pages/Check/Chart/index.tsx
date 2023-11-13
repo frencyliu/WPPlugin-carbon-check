@@ -3,7 +3,7 @@ import { Row, Col, Alert, Empty } from 'antd'
 import CheckChartColumn from '@/components/CheckChartColumn'
 import CheckChartPie from '@/components/CheckChartPie'
 import { ProjectContext } from '@/pages/Check'
-import { flatten } from 'lodash-es'
+import { flatten, round } from 'lodash-es'
 import { TYearlyDataType } from '@/pages/Check/ScopeI/CheckScopeITable/Table/types'
 import { TGroupData } from '@/types'
 import { nanoid } from 'nanoid'
@@ -42,7 +42,9 @@ const Chart = () => {
   const calculateCarbonTons34 = (group: TGroupData, name: string) =>
     group?.dataSource.map((record: TYearlyDataType) => ({
       ...record,
-      carbonTonsPerYear: (record.kmAmount || 0) * coefficient(record),
+      carbonTonsPerYear: record.tonAmount
+        ? round(record.tonAmount * (record.kmAmount || 0) * record.ar5, 10)
+        : (record.kmAmount || 0) * coefficient(record),
       scopeName: name,
     })) || []
 

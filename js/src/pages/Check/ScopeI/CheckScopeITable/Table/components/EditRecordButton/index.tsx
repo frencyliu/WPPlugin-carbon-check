@@ -12,6 +12,8 @@ import { TableDataContext } from '@/pages/Check/ScopeI/CheckScopeITable'
 import { useColor } from '@/hooks'
 import { round } from 'lodash-es'
 import { convertLanguage } from '@/utils/i18n'
+import TonsKmFormItem from '@/pages/Check/ScopeIII/CheckScopeIIITable/Table/components/TonsKmFormItem'
+import KmFormItem from '@/pages/Check/ScopeIII/CheckScopeIIITable/Table/components/KmFormItem'
 
 export const FormContext = createContext<any | null>(null)
 const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
@@ -95,15 +97,50 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
             unit: theFormData.unit,
           })
         default:
-          return 0
+          return round(theFormData.kmAmount, 3)
       }
     }
     const yearlyAmount = getYearlyAmount(formData)
 
+    if (period === 'fuel') {
+      const coefficientData =
+        scopes.coefficientDiff.find((item) => item.nameZh === record.km)
+          ?.data ?? []
+      const coefficient =
+        coefficientData.find((item) => item.unit1 === record.gwp)?.data ?? 0
+
+      const carbonTonsPerYear = yearlyAmount * coefficient
+
+      const theFormatRecord: TYearlyDataType = {
+        key: record?.key || nanoid(),
+        sourceName: formData?.sourceName,
+        gwp: record.gwp,
+        yearlyAmount,
+        ar5: coefficient,
+        co2e: carbonTonsPerYear,
+        carbonTonsPerYear,
+        period: formData?.period,
+        monthlyAmount:
+          formData?.period === 'monthly' ? formData?.monthlyAmount : [],
+        hourlyAmount:
+          formData?.period === 'hourly' ? formData?.hourlyAmount : 0,
+        unit: formData.unit,
+        km: formData?.km,
+        kmAmount: formData?.kmAmount,
+      }
+
+      const theRecordIndex = dataSource.findIndex(
+        (theRecord: { key: string }) => theRecord.key === record?.key,
+      )
+      return [
+        ...dataSource.slice(0, theRecordIndex),
+        theFormatRecord,
+        ...dataSource.slice(theRecordIndex + 1),
+      ]
+    }
     const ar5 = gwpMapping.find((gwp) => gwp?.value === formData?.gwp)?.ar5 || 0
 
     const carbonTonsPerYear = yearlyAmount * ar5
-
     const theFormatRecord: TYearlyDataType = {
       key: record?.key || nanoid(),
       sourceName: formData?.sourceName,
@@ -217,14 +254,17 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
                 initialValue="yearly"
               >
                 <Radio.Group className="w-full mt-8" buttonStyle="solid">
-                  <Radio.Button className="w-1/3 text-center" value="yearly">
+                  <Radio.Button className="w-1/4 text-center" value="yearly">
                     {convertLanguage('年碳排放')}
                   </Radio.Button>
-                  <Radio.Button className="w-1/3 text-center" value="monthly">
+                  <Radio.Button className="w-1/4 text-center" value="monthly">
                     {convertLanguage('月碳排放')}
                   </Radio.Button>
-                  <Radio.Button className="w-1/3 text-center" value="hourly">
+                  <Radio.Button className="w-1/4 text-center" value="hourly">
                     {convertLanguage('每小時碳排放')}
+                  </Radio.Button>
+                  <Radio.Button className="w-1/4 text-center" value="fuel">
+                    {convertLanguage('燃料排放')}
                   </Radio.Button>
                 </Radio.Group>
               </Form.Item>
@@ -247,6 +287,14 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
                   groupIndex={groupIndex}
                   validating={validating}
                   scopesNumber={scopesNumber}
+                />
+              )}
+              {period === 'fuel' && (
+                <KmFormItem
+                  groupIndex={groupIndex}
+                  validating={validating}
+                  scopesNumber={scopesNumber}
+                  scopes={scopes}
                 />
               )}
             </Form>

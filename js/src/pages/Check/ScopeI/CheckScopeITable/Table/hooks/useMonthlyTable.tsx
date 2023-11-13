@@ -1,12 +1,7 @@
 import { useContext } from 'react'
 import { Table } from 'antd'
 import type { ColumnTypes, TYearlyDataType } from '../types'
-import {
-  months,
-  gwpMapping,
-  convertUnitToTons,
-  windowOuterWidth,
-} from '@/utils'
+import { months, gwpMapping, convertUnitToTons } from '@/utils'
 import { ProjectContext } from '@/pages/Check'
 import { convertLanguage } from '@/utils/i18n'
 

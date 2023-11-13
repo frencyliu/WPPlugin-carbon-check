@@ -57,24 +57,49 @@ const useColumns = () => {
     },
     {
       title: convertLanguage('溫室氣體'),
-      width: 160,
+      width: 60,
       align: 'center',
       dataIndex: 'gwp',
-      render: (gwp) => gwpMapping.find((item) => item.value === gwp)?.label,
+      render: (gwp) =>
+        gwpMapping.find((item) => item.value === gwp)?.label || '-',
     },
     {
       title: convertLanguage('溫室氣體排放量 (噸/年)'),
       align: 'center',
       width: 200,
       dataIndex: 'kmAmount',
-      render: (kmAmount: number) => round(kmAmount, 3),
+      render: (kmAmount: number, record: TYearlyDataType) =>
+        record.gwp ? round(kmAmount, 3) : '-',
     },
+    ...(scopesNumber === 'scopeIII'
+      ? [
+          {
+            title: convertLanguage('頓'),
+            width: 50,
+            align: 'center' as any,
+            dataIndex: 'tonAmount',
+            render: (kmAmount: number, record: TYearlyDataType) =>
+              record.gwp ? '-' : kmAmount,
+          },
+          {
+            title: convertLanguage('公里'),
+            width: 50,
+            align: 'center' as any,
+            dataIndex: 'kmAmount',
+            render: (kmAmount: number, record: TYearlyDataType) =>
+              record.gwp ? '-' : kmAmount,
+          },
+        ]
+      : []),
     {
       title: convertLanguage('GPT係數'),
       align: 'center',
       dataIndex: 'km',
       width: 120,
       render: (km: string, record: TYearlyDataType) => {
+        if (record.tonAmount) {
+          return record.ar5
+        }
         const coefficient =
           scopes.coefficientDiff
             .find((item) => item.nameZh === km)
@@ -105,6 +130,12 @@ const useColumns = () => {
       dataIndex: 'km',
 
       render: (km: string, record: TYearlyDataType) => {
+        if (record.tonAmount) {
+          return round(
+            record.tonAmount * (record.kmAmount || 0) * record.ar5,
+            10,
+          )
+        }
         const coefficient =
           scopes.coefficientDiff
             .find((item) => item.nameZh === km)

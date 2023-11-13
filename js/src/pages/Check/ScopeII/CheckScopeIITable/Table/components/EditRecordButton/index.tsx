@@ -16,6 +16,10 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
   record,
 }) => {
   const form = Form.useFormInstance()
+  const [
+    key,
+    setKey,
+  ] = useState(0)
   const { scopes, setScopes } = useContext(ProjectContext)
   const { groupIndex, groupKey } = useContext(TableDataContext)
   const scopeIIGroups = scopes?.scopeII || []

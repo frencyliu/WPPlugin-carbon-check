@@ -11,7 +11,7 @@ import { TYearlyDataType } from '@/pages/Check/ScopeI/CheckScopeITable/Table/typ
 import { TGroupData } from '@/types'
 import ClipboardJS from 'clipboard'
 import { DownloadOutlined, CopyOutlined } from '@ant-design/icons'
-import { flatten } from 'lodash-es'
+import { flatten, round } from 'lodash-es'
 import { useReactToPrint } from 'react-to-print'
 import { getCopyableJson, gwpMapping, removeKey } from '@/utils'
 import { convertLanguage } from '@/utils/i18n'
@@ -55,7 +55,9 @@ const Export = () => {
   const calculateCarbonTons34 = (group: TGroupData, name: string) =>
     group?.dataSource.map((record: TYearlyDataType) => ({
       ...record,
-      carbonTonsPerYear: (record.kmAmount || 0) * coefficient(record),
+      carbonTonsPerYear: record.tonAmount
+        ? round(record.tonAmount * (record.kmAmount || 0) * record.ar5, 10)
+        : (record.kmAmount || 0) * coefficient(record),
       scopeName: name,
     })) || []
 

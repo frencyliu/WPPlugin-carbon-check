@@ -1,15 +1,17 @@
 import { createContext, useContext, useState } from 'react'
-import { Modal, Input, Radio, Form } from 'antd'
+import { Modal, Input, Form, Radio } from 'antd'
 import { SlidersOutlined } from '@ant-design/icons'
 import type { TYearlyDataType } from '@/pages/Check/ScopeIII/CheckScopeIIITable/Table/types'
 import { nanoid } from 'nanoid'
-import { gwpMapping, convertUnitToTons, reverseUnitValue } from '@/utils'
+import { gwpMapping, reverseUnitValue } from '@/utils'
 import { ProjectContext } from '@/pages/Check'
 import { TableDataContext } from '@/pages/Check/ScopeIII/CheckScopeIIITable'
 import { useColor } from '@/hooks'
 import { round } from 'lodash-es'
 import KmFormItem from '@/pages/Check/ScopeIII/CheckScopeIIITable/Table/components/KmFormItem'
 import { convertLanguage } from '@/utils/i18n'
+import TonsKmFormItem from '../TonsKmFormItem'
+import { tkmData } from '@/pages/Check/components/EditProjectButtons/Line/defaultData'
 
 export const FormContext = createContext<any | null>(null)
 const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
@@ -35,6 +37,14 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
     setValidating,
   ] = useState(false)
 
+  const period = Form.useWatch(
+    [
+      scopesNumber,
+      groupIndex,
+      'period',
+    ],
+    form,
+  )
   const showModal = (theRecord: TYearlyDataType) => () => {
     const values = form.getFieldsValue()
 
@@ -72,30 +82,59 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
 
   const handleData = () => {
     const formData = form.getFieldsValue()[scopesNumber][groupIndex]
-
     const getYearlyAmount = (theFormData: any) => {
       return round(theFormData.kmAmount, 3)
     }
 
     const yearlyAmount = getYearlyAmount(formData)
-    const ar5 = gwpMapping.find((gwp) => gwp?.value === formData?.gwp)?.ar5 || 0
+    if (period === 'fuel') {
+      const ar5 =
+        gwpMapping.find((gwp) => gwp?.value === formData?.gwp)?.ar5 || 0
 
-    const coefficient =
-      scopes.coefficientDiff
-        .find((item) => item.nameZh === formData?.km)
-        ?.data.find(
-          (i) =>
-            i.unit1 ===
-            gwpMapping
-              .find((item) => item.value === formData.gwp)
-              ?.value.toLocaleUpperCase(),
-        )?.data || 0
-    const carbonTonsPerYear = yearlyAmount * coefficient
+      const coefficientData =
+        scopes.coefficientDiff.find((item) => item.nameZh === record.km)
+          ?.data ?? []
+      const coefficient =
+        coefficientData.find((item) => item.unit1 === record.gwp)?.data ?? 0
+
+      const carbonTonsPerYear = yearlyAmount * coefficient
+
+      const theFormatRecord: TYearlyDataType = {
+        key: record?.key || nanoid(),
+        sourceName: formData?.sourceName,
+        gwp: record.gwp,
+        yearlyAmount,
+        ar5,
+        co2e: carbonTonsPerYear,
+        carbonTonsPerYear,
+        period: formData?.period,
+        monthlyAmount:
+          formData?.period === 'monthly' ? formData?.monthlyAmount : [],
+        hourlyAmount:
+          formData?.period === 'hourly' ? formData?.hourlyAmount : 0,
+        unit: formData.unit,
+        km: formData?.km,
+        kmAmount: formData?.kmAmount,
+      }
+
+      const theRecordIndex = dataSource.findIndex(
+        (theRecord: { key: string }) => theRecord.key === record?.key,
+      )
+      return [
+        ...dataSource.slice(0, theRecordIndex),
+        theFormatRecord,
+        ...dataSource.slice(theRecordIndex + 1),
+      ]
+    }
+    const ar5 =
+      tkmData.find((item) => item.nameZh === formData?.tonKm)?.coe || 0
+
+    const carbonTonsPerYear = yearlyAmount * formData.tonAmount * ar5
 
     const theFormatRecord: TYearlyDataType = {
       key: record?.key || nanoid(),
       sourceName: formData?.sourceName,
-      gwp: formData?.gwp,
+      gwp: record.gwp,
       yearlyAmount,
       ar5,
       co2e: carbonTonsPerYear,
@@ -107,12 +146,13 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
       unit: formData.unit,
       km: formData?.km,
       kmAmount: formData?.kmAmount,
+      tonAmount: formData?.tonAmount,
+      tonKm: formData?.tonKm,
     }
 
     const theRecordIndex = dataSource.findIndex(
       (theRecord: { key: string }) => theRecord.key === record?.key,
     )
-
     return [
       ...dataSource.slice(0, theRecordIndex),
       theFormatRecord,
@@ -131,7 +171,6 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
         const newScopes = JSON.parse(JSON.stringify(scopes))
 
         newScopes[scopesNumber][groupIndex].dataSource = newDataSource
-
         setScopes(newScopes)
       })
       .catch((err) => {
@@ -188,12 +227,39 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
                   addonBefore={convertLanguage('設備名稱')}
                 />
               </Form.Item>
-              <KmFormItem
-                groupIndex={groupIndex}
-                validating={validating}
-                scopesNumber={scopesNumber}
-                scopes={scopes}
-              />
+              <Form.Item
+                name={[
+                  scopesNumber,
+                  groupIndex,
+                  'period',
+                ]}
+                initialValue="fuel"
+              >
+                <Radio.Group className="w-full mt-8" buttonStyle="solid">
+                  <Radio.Button className="w-1/2 text-center" value="fuel">
+                    {convertLanguage('燃料排放')}
+                  </Radio.Button>
+                  <Radio.Button className="w-1/2 text-center" value="tonKm">
+                    {convertLanguage('頓公里排放')}
+                  </Radio.Button>
+                </Radio.Group>
+              </Form.Item>
+              {period === 'fuel' && (
+                <KmFormItem
+                  groupIndex={groupIndex}
+                  validating={validating}
+                  scopesNumber={scopesNumber}
+                  scopes={scopes}
+                />
+              )}
+              {period === 'tonKm' && (
+                <TonsKmFormItem
+                  groupIndex={groupIndex}
+                  validating={validating}
+                  scopesNumber={scopesNumber}
+                  scopes={scopes}
+                />
+              )}
             </Form>
           </div>
         </div>

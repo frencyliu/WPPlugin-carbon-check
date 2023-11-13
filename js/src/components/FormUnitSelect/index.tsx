@@ -20,7 +20,7 @@ const FormUnitSelect: React.FC<{
     <Select className={className} value={unit} onSelect={handleSelect}>
       <Option value="kg">kg</Option>
 
-      <Option value="tons">tons</Option>
+      <Option value="tonne">tonne</Option>
     </Select>
   )
 }

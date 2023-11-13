@@ -11,6 +11,9 @@ import { ProjectContext } from '@/pages/Check'
 import { TableDataContext } from '@/pages/Check/ScopeI/CheckScopeITable'
 import { TScopes } from '@/types'
 import { convertLanguage } from '@/utils/i18n'
+import TonsKmFormItem from '@/pages/Check/ScopeIII/CheckScopeIIITable/Table/components/TonsKmFormItem'
+import KmFormItem from '@/pages/Check/ScopeIII/CheckScopeIIITable/Table/components/KmFormItem'
+import { round } from 'lodash-es'
 
 export const FormContext = createContext<any | null>(null)
 const AddRecordButton = () => {
@@ -107,12 +110,86 @@ const AddRecordButton = () => {
             unit: theFormData.unit,
           })
         default:
-          return 0
+          return round(theFormData.kmAmount, 3)
       }
     }
     const yearlyAmount = getYearlyAmount(formData)
 
     const ar5 = gwpMapping.find((gwp) => gwp?.value === formData?.gwp)?.ar5 || 0
+
+    if (period === 'fuel') {
+      const kmValue = formData?.km
+      const coefficientData =
+        scopes.coefficientDiff.find((item) => item.nameZh === kmValue)?.data ??
+        []
+      const co2Data =
+        coefficientData.find((item) => item.unit1 === 'CO2')?.data ?? 0
+      const carbonTonsPerYearCO2 = yearlyAmount * co2Data
+      const coefficientCH4 =
+        coefficientData.find((item) => item.unit1 === 'CH4')?.data ?? 0
+      const carbonTonsPerYearCH4 = yearlyAmount * coefficientCH4
+      const coefficientN2O =
+        coefficientData.find((item) => item.unit1 === 'N2O')?.data ?? 0
+      const carbonTonsPerYearN2O = yearlyAmount * coefficientN2O
+
+      const theFormatRecordCO2: TYearlyDataType = {
+        km: formData?.km,
+        kmAmount: formData?.kmAmount,
+        key: nanoid(),
+        sourceName: formData?.sourceName,
+        gwp: 'co2',
+        yearlyAmount,
+        ar5,
+        co2e: carbonTonsPerYearCO2,
+        carbonTonsPerYear: carbonTonsPerYearCO2,
+        period: formData?.period,
+        monthlyAmount:
+          formData?.period === 'fuel' ? formData.monthlyAmount : [],
+        hourlyAmount: formData?.period === 'hourly' ? formData.hourlyAmount : 0,
+        unit: formData.unit,
+      }
+
+      const theFormatRecordCH4: TYearlyDataType = {
+        km: formData?.km,
+        kmAmount: formData?.kmAmount,
+        key: nanoid(),
+        sourceName: formData?.sourceName,
+        gwp: 'ch4',
+        yearlyAmount,
+        ar5,
+        co2e: carbonTonsPerYearCH4,
+        carbonTonsPerYear: carbonTonsPerYearCH4,
+        period: formData?.period,
+        monthlyAmount:
+          formData?.period === 'fuel' ? formData.monthlyAmount : [],
+        hourlyAmount: formData?.period === 'hourly' ? formData.hourlyAmount : 0,
+        unit: formData.unit,
+      }
+
+      const theFormatRecordN2O: TYearlyDataType = {
+        km: formData?.km,
+        kmAmount: formData?.kmAmount,
+        key: nanoid(),
+        sourceName: formData?.sourceName,
+        gwp: 'n2o',
+        yearlyAmount,
+        ar5,
+        co2e: carbonTonsPerYearN2O,
+        carbonTonsPerYear: carbonTonsPerYearN2O,
+        period: formData?.period,
+        monthlyAmount:
+          formData?.period === 'fuel' ? formData.monthlyAmount : [],
+        hourlyAmount: formData?.period === 'hourly' ? formData.hourlyAmount : 0,
+        unit: formData.unit,
+      }
+      console.log('theFormatRecord', theFormatRecordCO2)
+      return [
+        ...dataSource,
+        theFormatRecordCO2,
+        theFormatRecordCH4,
+        theFormatRecordN2O,
+      ]
+    }
 
     const carbonTonsPerYear = yearlyAmount * ar5
 
@@ -225,14 +302,17 @@ const AddRecordButton = () => {
                 initialValue="yearly"
               >
                 <Radio.Group className="w-full mt-8" buttonStyle="solid">
-                  <Radio.Button className="w-1/3 text-center" value="yearly">
+                  <Radio.Button className="w-1/4 text-center" value="yearly">
                     {convertLanguage('年碳排放')}
                   </Radio.Button>
-                  <Radio.Button className="w-1/3 text-center" value="monthly">
+                  <Radio.Button className="w-1/4 text-center" value="monthly">
                     {convertLanguage('月碳排放')}
                   </Radio.Button>
-                  <Radio.Button className="w-1/3 text-center" value="hourly">
+                  <Radio.Button className="w-1/4 text-center" value="hourly">
                     {convertLanguage('每小時碳排放')}
+                  </Radio.Button>
+                  <Radio.Button className="w-1/4 text-center" value="fuel">
+                    {convertLanguage('燃料排放')}
                   </Radio.Button>
                 </Radio.Group>
               </Form.Item>
@@ -255,6 +335,14 @@ const AddRecordButton = () => {
                   groupIndex={groupIndex}
                   validating={validating}
                   scopesNumber={scopesNumber}
+                />
+              )}
+              {period === 'fuel' && (
+                <KmFormItem
+                  groupIndex={groupIndex}
+                  validating={validating}
+                  scopesNumber={scopesNumber}
+                  scopes={scopes}
                 />
               )}
             </Form>

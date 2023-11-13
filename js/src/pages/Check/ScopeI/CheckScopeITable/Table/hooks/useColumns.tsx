@@ -71,6 +71,22 @@ const useColumns = () => {
       align: 'center',
       dataIndex: 'ar5',
       width: 120,
+      render: (ar5: number, record: any) => {
+        if (record.period !== 'fuel') {
+          return record.ar5
+        }
+        const coefficient =
+          scopes.coefficientDiff
+            .find((item) => item.nameZh === record.km)
+            ?.data.find(
+              (i) =>
+                i.unit1 ===
+                gwpMapping
+                  .find((item) => item.value === record.gwp)
+                  ?.value.toLocaleUpperCase(),
+            )?.data || 0
+        return coefficient
+      },
     },
     {
       title: (
@@ -86,8 +102,24 @@ const useColumns = () => {
         </>
       ),
       align: 'center',
-      dataIndex: 'carbonTonsPerYear',
-      render: (carbonTonsPerYear: number) => round(carbonTonsPerYear, 3),
+      dataIndex: 'km',
+      render: (km: string, record: TYearlyDataType) => {
+        if (record.period !== 'fuel') {
+          return round(record.carbonTonsPerYear, 3)
+        }
+        const coefficient =
+          scopes.coefficientDiff
+            .find((item) => item.nameZh === km)
+            ?.data.find(
+              (i) =>
+                i.unit1 ===
+                gwpMapping
+                  .find((item) => item.value === record.gwp)
+                  ?.value.toLocaleUpperCase(),
+            )?.data || 0
+        const kmAmount = record.kmAmount || 0
+        return coefficient * kmAmount
+      },
       width: 200,
     },
     {

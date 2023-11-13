@@ -55,7 +55,7 @@ const useColumns = () => {
       render: (yearlyAmount: number) => round(yearlyAmount, 3),
     },
     {
-      title: 'co2Kwh',
+      title: 'KWh',
       align: 'center',
       dataIndex: 'co2Kwh',
       width: 120,

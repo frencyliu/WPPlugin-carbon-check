@@ -291,6 +291,22 @@ const constants: I18n[] = [
     en: 'Annual Carbon Emissions',
   },
   {
+    zh: '燃料排放',
+    en: 'Fuel Emissions',
+  },
+  {
+    zh: '頓公里排放',
+    en: 'Tonne-km Emissions',
+  },
+  {
+    zh: '公里',
+    en: 'km',
+  },
+  {
+    zh: '頓',
+    en: 'tonne',
+  },
+  {
     zh: '月碳排放',
     en: 'Monthly Carbon Emissions',
   },

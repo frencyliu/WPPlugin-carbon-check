@@ -41,13 +41,14 @@ export type TYearlyDataType = {
   ar5: number
   co2e: number
   carbonTonsPerYear: number
-  period: 'hourly' | 'monthly' | 'yearly'
+  period: 'hourly' | 'monthly' | 'yearly' | 'fuel'
   monthlyAmount?: number[]
   hourlyAmount?: number
   unit: TUnit
   km: string
   kmAmount?: number
   scopeName?: string
+  tonAmount?: number
 }
 
 export type ColumnTypes = Exclude<EditableTableProps['columns'], undefined> & {

@@ -1,5 +1,4 @@
 import { Input, Form, InputNumber, Select } from 'antd'
-import FormGWPSelect from '@/components/FormGWPSelect'
 import FormFuelSelect from '@/components/FormFuelSelect'
 import { handleClearZero } from '@/utils'
 import { TScopes } from '@/types'
@@ -30,7 +29,7 @@ const KmFormItem: React.FC<{
     form,
   )
 
-  const showUnitValue = gwp && km
+  const showUnitValue = km
 
   const [
     unitValue,
@@ -61,25 +60,25 @@ const KmFormItem: React.FC<{
 
       if (foundItem) {
         // 如果找到符合條件的元素，則使用 data.find 方法尋找符合條件的子元素
-        const foundDataItem = foundItem.data.find(
-          (i) =>
-            i.unit1 ===
-            form
-              .getFieldValue([
-                scopesNumber,
-                groupIndex,
-                'gwp',
-              ])
-              .toLocaleUpperCase(),
-        )
-
+        // const foundDataItem = foundItem.data.find(
+        //   (i) =>
+        //     i.unit1 ===
+        //     form
+        //       .getFieldValue([
+        //         scopesNumber,
+        //         groupIndex,
+        //         'gwp',
+        //       ])
+        //       .toLocaleUpperCase(),
+        // )
+        setUnitValue(foundItem.data[0].unit2)
         // 如果找到符合條件的子元素，則將 unitValue 設定為它的 unit1 屬性
-        if (foundDataItem) {
-          setUnitValue(foundDataItem.unit2)
-        } else {
-          // 如果找不到符合條件的子元素，則設定 unitValue 為 '123'
-          setUnitValue('')
-        }
+        // if (foundDataItem) {
+        //   setUnitValue(foundDataItem.unit2)
+        // } else {
+        //   // 如果找不到符合條件的子元素，則設定 unitValue 為 '123'
+        //   setUnitValue('')
+        // }
       } else {
         // 如果找不到符合條件的元素，則設定 unitValue 為 '123'
         setUnitValue('')
@@ -108,7 +107,7 @@ const KmFormItem: React.FC<{
           ]}
         >
           <InputNumber
-            addonBefore={convertLanguage('年排放')}
+            addonBefore={convertLanguage('排放量')}
             className="w-48 mr-1"
             placeholder={convertLanguage('排放量')}
             min={0}
@@ -134,28 +133,6 @@ const KmFormItem: React.FC<{
               scopesNumber,
               groupIndex,
               'km',
-            ]}
-          />
-        </Form.Item>
-        <Form.Item
-          name={[
-            scopesNumber,
-            groupIndex,
-            'gwp',
-          ]}
-          className="w-[calc(100%-30rem)] mb-0"
-          rules={[
-            {
-              required: validating,
-              message: convertLanguage('請選擇溫室氣體'),
-            },
-          ]}
-        >
-          <FormGWPSelect
-            name={[
-              scopesNumber,
-              groupIndex,
-              'gwp',
             ]}
           />
         </Form.Item>

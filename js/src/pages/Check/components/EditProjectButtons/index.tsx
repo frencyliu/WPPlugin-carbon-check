@@ -182,7 +182,9 @@ const EditProjectButtons: React.FC<{
               )}
             </Modal>
           </div>
-          {scopesNumber === 'scopeIII' || scopesNumber === 'scopeIV' ? (
+          {scopesNumber === 'scopeI' ||
+          scopesNumber === 'scopeIII' ||
+          scopesNumber === 'scopeIV' ? (
             <Button
               className="mt-2"
               type="primary"

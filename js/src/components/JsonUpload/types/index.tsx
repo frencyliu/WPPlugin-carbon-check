@@ -23,7 +23,7 @@ const ZJsonUpload = z.object({
           hourlyAmount: z.number().min(0),
           unit: z.union([
             z.literal('kg'),
-            z.literal('tons'),
+            z.literal('tonne'),
           ]),
         })
         .array(),
