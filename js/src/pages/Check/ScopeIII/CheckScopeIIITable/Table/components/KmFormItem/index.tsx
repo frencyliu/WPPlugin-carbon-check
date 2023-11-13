@@ -97,14 +97,15 @@ const KmFormItem: React.FC<{
   ])
 
   return (
-    <>
-      <Input.Group compact className="mb-4">
+    <div className="text-center">
+      <Input.Group compact className="mb-4 inline-block">
         <Form.Item
           name={[
             scopesNumber,
             groupIndex,
             'kmAmount',
           ]}
+          className="inline-block"
         >
           <InputNumber
             addonBefore={convertLanguage('排放量')}
@@ -120,7 +121,7 @@ const KmFormItem: React.FC<{
             groupIndex,
             'km',
           ]}
-          className="w-[calc(100%-25rem)] mb-0"
+          className="inline-block w-[calc(100%-25rem)] mb-0"
           rules={[
             {
               required: validating,
@@ -140,7 +141,7 @@ const KmFormItem: React.FC<{
           <Select className={'rounded-l-none'} value={unitValue} disabled />
         </Form.Item>
       </Input.Group>
-    </>
+    </div>
   )
 }
 
