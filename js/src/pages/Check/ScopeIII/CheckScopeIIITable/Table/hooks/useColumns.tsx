@@ -25,8 +25,13 @@ const useColumns = () => {
   const dataSource = group?.dataSource || []
 
   const handleDelete = (key: string) => {
+    const deleteDataSourceName = dataSource.filter(
+      (theRecord: { key: string }) => theRecord.key === key,
+    )[0].sourceName
+
     const newDataSource = dataSource.filter(
-      (theRecord: { key: string }) => theRecord.key !== key,
+      (theRecord: { sourceName: string }) =>
+        theRecord.sourceName !== deleteDataSourceName,
     )
     setScopes({
       ...scopes,

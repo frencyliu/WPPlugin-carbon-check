@@ -85,45 +85,37 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
     const getYearlyAmount = (theFormData: any) => {
       return round(theFormData.kmAmount, 3)
     }
-
     const yearlyAmount = getYearlyAmount(formData)
     if (period === 'fuel') {
-      const ar5 =
-        gwpMapping.find((gwp) => gwp?.value === formData?.gwp)?.ar5 || 0
-
       const coefficientData =
         scopes.coefficientDiff.find((item) => item.nameZh === record.km)
           ?.data ?? []
+      const theRecordIndex = dataSource.findIndex(
+        (theRecord: { sourceName: string }) =>
+          theRecord.sourceName === record?.sourceName,
+      )
+      const threeRecords = dataSource.filter(
+        (theRecord: { sourceName: string }) =>
+          theRecord.sourceName === record?.sourceName,
+      )
       const coefficient =
         coefficientData.find((item) => item.unit1 === record.gwp)?.data ?? 0
 
-      const carbonTonsPerYear = yearlyAmount * coefficient
+      const newThreeRecords = threeRecords.map((item: any) => {
+        const newRecord = {
+          ...item,
+          yearlyAmount,
+          co2e: yearlyAmount * coefficient,
+          carbonTonsPerYear: yearlyAmount * coefficient,
+          kmAmount: formData?.kmAmount,
+        }
+        return newRecord
+      })
 
-      const theFormatRecord: TYearlyDataType = {
-        key: record?.key || nanoid(),
-        sourceName: formData?.sourceName,
-        gwp: record.gwp,
-        yearlyAmount,
-        ar5,
-        co2e: carbonTonsPerYear,
-        carbonTonsPerYear,
-        period: formData?.period,
-        monthlyAmount:
-          formData?.period === 'monthly' ? formData?.monthlyAmount : [],
-        hourlyAmount:
-          formData?.period === 'hourly' ? formData?.hourlyAmount : 0,
-        unit: formData.unit,
-        km: formData?.km,
-        kmAmount: formData?.kmAmount,
-      }
-
-      const theRecordIndex = dataSource.findIndex(
-        (theRecord: { key: string }) => theRecord.key === record?.key,
-      )
       return [
         ...dataSource.slice(0, theRecordIndex),
-        theFormatRecord,
-        ...dataSource.slice(theRecordIndex + 1),
+        ...newThreeRecords,
+        ...dataSource.slice(theRecordIndex + 3),
       ]
     }
     const ar5 =

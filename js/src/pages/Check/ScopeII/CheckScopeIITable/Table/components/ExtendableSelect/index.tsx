@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
 import { Divider, Input, Select, Space, Button, InputRef, Form } from 'antd'
 import { sourceNames } from '@/utils'
 import { convertLanguage } from '@/utils/i18n'
@@ -39,6 +39,13 @@ const ExtendableSelect: React.FC<{
     }, 0)
   }
 
+  const removeItem = (
+    e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>,
+  ) => {
+    e.preventDefault()
+    setItems(items.filter((item) => item !== name))
+  }
+
   return (
     <Form.Item
       label={convertLanguage('電力來源')}
@@ -67,6 +74,9 @@ const ExtendableSelect: React.FC<{
               />
               <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
                 {convertLanguage('新增')}
+              </Button>
+              <Button type="text" icon={<MinusOutlined />} onClick={removeItem}>
+                {convertLanguage('刪除')}
               </Button>
             </Space>
           </>
