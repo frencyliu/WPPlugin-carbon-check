@@ -226,7 +226,7 @@ const AddRecordButton = () => {
         open={isModalOpen}
         onOk={handleModalOk}
         centered
-        width={648}
+        width={parseInt(convertLanguage('648'))}
         className="cc-modal"
         onCancel={handleCancel}
         okText={convertLanguage('新增設備')}

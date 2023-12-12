@@ -43,6 +43,7 @@ const ExtendableSelect: React.FC<{
     e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>,
   ) => {
     e.preventDefault()
+    if (defaultItems.includes(name)) return
     setItems(items.filter((item) => item !== name))
   }
 

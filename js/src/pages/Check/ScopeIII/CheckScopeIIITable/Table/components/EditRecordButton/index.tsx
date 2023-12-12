@@ -186,7 +186,7 @@ const EditRecordButton: React.FC<{ record: TYearlyDataType }> = ({
         open={isModalOpen}
         onOk={handleModalOk}
         centered
-        width={648}
+        width={parseInt(convertLanguage('648'))}
         className="cc-modal"
         onCancel={handleCancel}
         okText={convertLanguage('編輯設備')}

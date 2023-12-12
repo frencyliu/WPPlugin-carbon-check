@@ -630,6 +630,10 @@ const constants: I18n[] = [
     zh: '請輸入使用度數',
     en: 'Please enter usage',
   },
+  {
+    zh: '648',
+    en: '1000',
+  },
 ]
 
 export enum ELanguage {
